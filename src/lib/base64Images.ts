@@ -73,7 +73,10 @@ export function getOptimizedImageSrc(
  */
 export const pathToBase64Map: Record<string, Base64ImageKey> = {
   "/images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-sar-pass-trek-biskeri-thach-snow-slide-high-altitude.jpg": "sarPass",
+  "/images/Trek/grahan-village-trek.jpeg": "grahan",
+  "/images/Trek/grahan-village-trek.jpg": "grahan",
   "/images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-grahan-village-trek-forest-trail-himachali-culture.jpg": "grahan",
+  "/images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-grahan-village-trek-forest-trail-himachali-culture.jpeg": "grahan",
   "/images/Parvati's Lap - Luxury Hostel & Villa - logo-text2.png": "logoText2",
 };
 

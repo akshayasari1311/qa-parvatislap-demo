@@ -52,7 +52,7 @@ const treks: Trek[] = [
     title: "Grahan Village Trek",
     subtitle: "3-4 hrs | 7 km",
     description: "An enchanting trek through dense pine and oak forests leading to the isolated Grahan village. This offbeat trail offers stunning views of snow-capped peaks, traditional Himachali architecture, and warm local hospitality. Perfect for those seeking an authentic mountain experience away from tourist crowds.",
-    image: "/images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-grahan-village-trek-forest-trail-himachali-culture.jpg",
+    image: "/images/Trek/grahan-village-trek.jpeg",
   },
   {
     id: "sar-pass-trek",

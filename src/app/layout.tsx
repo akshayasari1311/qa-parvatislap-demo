@@ -50,6 +50,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={`theme-light ${inter.variable}`}>
       <head>
+        {/* Organization Structured Data */}
+        <StructuredData json={organizationSchemaJson} />
+        
+        {/* Review Structured Data */}
+        <StructuredData json={reviewSchemaJson} />
+
+        {/* Contact Point Structured Data */}
+        <StructuredData json={contactPointSchemaJson} />
+
+        {/* Video Structured Data (How to Reach) */}
+        <StructuredData json={howToReachVideoSchemaJson} />
+
         {/* Strategy 7: Preload critical resources */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -73,18 +85,6 @@ export default function RootLayout({
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://places.googleapis.com" />
-
-        {/* Organization Structured Data */}
-        <StructuredData json={organizationSchemaJson} />
-        
-        {/* Review Structured Data */}
-        <StructuredData json={reviewSchemaJson} />
-
-        {/* Contact Point Structured Data */}
-        <StructuredData json={contactPointSchemaJson} />
-
-        {/* Video Structured Data (How to Reach) */}
-        <StructuredData json={howToReachVideoSchemaJson} />
         
         {/* Google Analytics */}
         <GoogleAnalytics />

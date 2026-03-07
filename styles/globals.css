@@ -1,0 +1,818 @@
+﻿@import "tailwindcss";
+
+/* ======================================
+   TAILWIND V4 DARK MODE CONFIGURATION
+   Override default dark: variant to use .theme-dark class
+   instead of prefers-color-scheme media query
+   ====================================== */
+@custom-variant dark (&:where(.theme-dark, .theme-dark *));
+
+/* ======================================
+   GLOBAL STYLES
+   ====================================== */
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ======================================
+   TAILWIND V4 CUSTOM CONFIGURATION
+   Using @theme directive for custom breakpoints
+   ====================================== */
+
+@theme {
+  /* Custom breakpoint for ultra-wide screens (2560px+) */
+  --breakpoint-3xl: 2560px;
+  
+  /* Custom colors from legacy HTML */
+  --color-forest-green: #556b2f;
+  --color-sage-green: #9aad7a;
+  --color-warm-brown: #8b4513;
+  --color-muted-gray: #9ca3af;
+  --color-text-dark: #111827;
+  --color-nature-green: #6b8e23;
+  --color-earth-brown: #8b7355;
+  --color-sky-blue: #87ceeb;
+  --color-whatsapp-green: #556b2f;
+  --color-olive-green: #808000;
+  --color-olive-light: #9aad7a;
+  --color-olive-dark: #556b2f;
+  --color-neon-green: #39ff14;
+  --color-dark-forest: #1B3B2F;
+  --color-dark-emerald: #0F1F17;
+  --color-rich-green: #2d5a3d;
+}
+
+/* ======================================
+   LEGACY CSS FROM ORIGINAL HTML
+   Preserves exact styling from new_index.html
+   ====================================== */
+
+        .theme-dark {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --text-primary: #e6f4e6;
+            --text-secondary: #9fb3a0;
+            --muted: #7a8a7a;
+            --border-color: rgba(154, 173, 122, 0.2);
+        }
+        .theme-light {
+            --bg-primary: #fefffe;
+            --bg-secondary: #f8fdf8;
+            --text-primary: #1a2e1a;
+            --text-secondary: #4a6b4a;
+            --muted: #6b8a6b;
+            --border-color: #d4e6d4;
+        }
+		
+		/* Page Loader Animations */
+		@keyframes spin {
+			from {
+				transform: rotate(0deg);
+			}
+			to {
+				transform: rotate(360deg);
+			}
+		}
+		
+		@keyframes bounce {
+			0%, 100% {
+				transform: translateY(0);
+			}
+			50% {
+				transform: translateY(-0.5rem);
+			}
+		}
+		
+		@keyframes pulse {
+			0%, 100% {
+				opacity: 1;
+			}
+			50% {
+				opacity: 0.5;
+			}
+		}
+		
+		.theme-light .hero-title {
+            color: #ffffff;
+            text-shadow: 
+                2px 2px 8px rgba(0, 0, 0, 0.9),
+                4px 4px 16px rgba(0, 0, 0, 0.7),
+                6px 6px 24px rgba(0, 0, 0, 0.5);
+        }
+		
+		.theme-light .hero-subtitle,
+        .theme-light .hero-location {
+            color: #ffffff;
+            text-shadow: 
+                2px 2px 6px rgba(0, 0, 0, 0.8),
+                3px 3px 12px rgba(0, 0, 0, 0.6),
+                4px 4px 18px rgba(0, 0, 0, 0.4);
+        }
+		
+        .bg-primary { background: var(--bg-primary); }
+        .bg-secondary { background: var(--bg-secondary); }
+        .text-primary { color: var(--text-primary); }
+        .text-secondary { color: var(--text-secondary); }
+        .text-muted { color: var(--muted); }
+        .border-theme { border-color: var(--border-color); }
+
+        /* Dark mode - clean black background without green spray effect */
+        .theme-dark body {
+            background: #000000;
+            position: relative;
+        }
+        
+        /* Hero text in dark mode - white with enhanced shadows (no green tint) */
+        .theme-dark .hero-title {
+            color: #ffffff;
+            text-shadow: 
+                2px 2px 8px rgba(0, 0, 0, 0.9),
+                4px 4px 16px rgba(0, 0, 0, 0.7),
+                6px 6px 24px rgba(0, 0, 0, 0.5);
+        }
+        
+        .theme-dark .hero-subtitle,
+        .theme-dark .hero-location {
+            color: #ffffff;
+            text-shadow: 
+                2px 2px 6px rgba(0, 0, 0, 0.8),
+                3px 3px 12px rgba(0, 0, 0, 0.6),
+                4px 4px 18px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Enhanced Theme Toggle Visibility */
+        #theme-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        #theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .theme-dark #theme-toggle {
+            background: rgba(57, 255, 20, 0.2);
+            border: 1px solid rgba(57, 255, 20, 0.4);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+        }
+        
+        .theme-dark #theme-toggle:hover {
+            background: rgba(57, 255, 20, 0.3);
+            border-color: rgba(57, 255, 20, 0.5);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+        }
+        
+        #theme-icon {
+            font-size: 16px;
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+        }
+        
+        .theme-dark #theme-icon {
+            filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.8));
+        }
+        
+        #theme-label {
+            color: #9ab19a;
+            font-weight: 100;
+            font-size: 12px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            opacity: 1 !important;
+        }
+        
+        .theme-dark #theme-label {
+            color: #ffffff;
+            text-shadow: 0 0 6px rgba(57, 255, 20, 0.6);
+        }
+
+        /* Car Window Rain Effect */
+        .hero-bg {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /*background: linear-gradient(135deg, rgba(85, 107, 47, 0.15), rgba(154, 173, 122, 0.1));*/
+            z-index: -1;
+        }
+
+        /* Video background enhancements */
+        .hero-video {
+            pointer-events: none;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+
+        /* Fallback for mobile devices that don't support video autoplay */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-video {
+                display: none;
+            }
+
+            .hero-bg::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                /*background: linear-gradient(135deg, rgba(85, 107, 47, 0.15), rgba(154, 173, 122, 0.1));*/
+                background-size: cover;
+                background-position: center;
+                z-index: -2;
+            }
+        }
+
+        .rain-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(0.5px);
+            -webkit-backdrop-filter: blur(0.5px);
+            pointer-events: none;
+        }
+
+        .rain-drop {
+            position: absolute;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+            border-radius: 0 0 50% 50%;
+            animation: rainDrop linear infinite;
+        }
+
+        @keyframes rainDrop {
+            0% { transform: translateY(-100vh) rotate(15deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.1; }
+            100% { transform: translateY(100vh) rotate(15deg); opacity: 0; }
+        }
+
+        .hero-pattern::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon fill="%23ffffff" fill-opacity="0.02" points="0,100 25,75 50,85 75,60 100,70 100,100"/><polygon fill="%23ffffff" fill-opacity="0.01" points="0,100 20,80 40,90 60,70 80,75 100,65 100,100"/></svg>');
+            background-size: 300px 200px;
+            animation: float 20s ease-in-out infinite;
+            z-index: 0; pointer-events: none; opacity: 0.4;
+        }
+
+        @keyframes float {
+            0%,100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-10px) translateX(5px); }
+            50% { transform: translateY(-20px) translateX(0); }
+            75% { transform: translateY(-10px) translateX(-5px); }
+        }
+
+        .glass-bg { background: rgba(248, 253, 248, 0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .theme-dark .glass-bg { background: rgba(0,0,0,0.95); }
+
+        /* Glassmorphism Booking Widget - Maximum blur effect */
+        .booking-glass {
+            background: rgba(255, 255, 255, 0.2);
+            -webkit-backdrop-filter: blur(100px) saturate(180%);
+            backdrop-filter: blur(100px) saturate(180%);
+            border: none;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .theme-dark .booking-glass {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            -webkit-backdrop-filter: blur(100px) saturate(180%);
+            backdrop-filter: blur(100px) saturate(180%);
+            box-shadow: 0 25px 50px -12px rgba(57, 255, 20, 0.1);
+        }
+        
+        .booking-content-glass {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.1));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(60px);
+            backdrop-filter: blur(60px);
+        }
+        
+        .theme-dark .booking-content-glass {
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.1), rgba(0, 0, 0, 0.4));
+            border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+            -webkit-backdrop-filter: blur(60px);
+            backdrop-filter: blur(60px);
+        }
+        
+        .glass-input {
+            background: rgba(255, 255, 255, 0.2);
+            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+        }
+        
+        .glass-input::placeholder { color: var(--muted); }
+        
+        .theme-dark .glass-input {
+            background: rgba(57, 255, 20, 0.1);
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(40px);
+            color: var(--text-primary);
+        }
+        
+        .theme-dark .glass-input::placeholder { color: var(--muted); }
+        
+        /* Booking Widget Minimized State */
+        .booking-minimized {
+            width: 223px !important; /* Exactly 223px for mobile */
+            max-width: 223px !important;
+        }
+        
+        @media (min-width: 1024px) {
+            .booking-minimized {
+                width: 15rem !important; /* Slightly larger for desktop */
+                max-width: none !important;
+            }
+        }
+
+        /* Sticky Image - REMOVED - Converted to Tailwind */
+
+        /* Enhanced Gallery Styles */
+        .gallery-container {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            border-radius: 24px;
+            padding: 32px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(128, 128, 0, 0.1);
+        }
+        
+        .theme-dark .gallery-container {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(57, 255, 20, 0.05));
+            border: 2px solid rgba(57, 255, 20, 0.2);
+            box-shadow: 0 20px 60px rgba(57, 255, 20, 0.1);
+        }
+        
+        .gallery-track, .auto-scroll-track {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 24px;
+        }
+        
+        /*.gallery-item {
+            flex-shrink: 0;
+            width: 400px;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(128, 128, 0, 0.2);
+            border: 2px solid rgba(154, 173, 122, 0.2);
+        }*/
+        
+        /* Gallery Items - REMOVED - Converted to Tailwind */
+        
+        /* Gallery Navigation Buttons - REMOVED - Converted to Tailwind */
+
+        /* Section Headers - REMOVED - Converted to Tailwind */
+        
+        /* Typography - REMOVED - Converted to Tailwind */
+
+        /* Enhanced Review Cards - REMOVED - Converted to Tailwind */
+
+        /* Enhanced Feature Cards - REMOVED - Converted to Tailwind */
+
+        /* Enhanced Trek Cards - REMOVED - Converted to Tailwind */
+
+        /* Accommodation Cards - REMOVED - Converted to Tailwind */
+
+        /* Custom Scrollbar for Review Text */
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: rgba(154, 173, 122, 0.3);
+            border-radius: 3px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+            background: rgba(154, 173, 122, 0.5);
+        }
+
+        .theme-dark .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: rgba(57, 255, 20, 0.3);
+        }
+
+        .theme-dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+            background: rgba(57, 255, 20, 0.5);
+        }
+
+        /* Image Modal - Updated for theme consistency */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26,46,26,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .theme-dark .image-modal {
+            background: rgba(0,0,0,0.95);
+        }
+        
+        .image-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(154, 173, 122, 0.3);
+            border: none;
+            color: white;
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .close-modal:hover {
+            background: rgba(154, 173, 122, 0.5);
+        }
+        
+        .theme-dark .close-modal {
+            background: rgba(57, 255, 20, 0.3);
+        }
+        
+        .theme-dark .close-modal:hover {
+            background: rgba(57, 255, 20, 0.5);
+        }
+        
+        /* Carousel in Modal */
+        .carousel-container {
+            display: flex;
+            width: 90%;
+            max-width: 1400px;
+            height: 80%;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-track {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            gap: 20px;
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            max-width: 65%;
+            max-height: 85%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: scale(0.7);
+            filter: blur(4px);
+            z-index: 1;
+        }
+        
+        .carousel-slide-prev {
+            opacity: 0.5;
+            transform: translateX(-65%) scale(0.7);
+            filter: blur(3px);
+            z-index: 2;
+        }
+        
+        .carousel-slide-active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            filter: blur(0);
+            z-index: 3;
+            max-width: 100%;
+            max-height: 100%;
+            cursor: pointer;
+        }
+        
+        .carousel-slide-active:hover {
+            transform: translateX(0) scale(1.5);
+        }
+        
+        .carousel-slide-next {
+            opacity: 0.5;
+            transform: translateX(65%) scale(0.7);
+            filter: blur(3px);
+            z-index: 2;
+        }
+        
+        /* Carousel Navigation Arrows */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            transition: all 0.3s ease;
+            z-index: 10;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .carousel-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .theme-dark .carousel-nav {
+            background: rgba(57, 255, 20, 0.2);
+            border: 2px solid rgba(57, 255, 20, 0.4);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+        }
+        
+        .theme-dark .carousel-nav:hover {
+            background: rgba(57, 255, 20, 0.3);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
+        }
+        
+        .carousel-nav-prev {
+            left: 40px;
+        }
+        
+        .carousel-nav-next {
+            right: 40px;
+        }
+
+        /* Logo, Social Icons, WhatsApp Button, Mobile Menu - REMOVED - Converted to Tailwind */
+
+        .icon-img {
+            width: 57px;
+            height: 57px;
+        }
+
+        /* Responsive Design - REMOVED - Converted to Tailwind */
+		/* Mobile styles now use md: prefix (768px+) */
+		
+		.icon-img
+		{
+			width: 120px;
+			display: inline-block;
+		}
+		
+		/* Large Screen Optimization - 2560px x 1600px */
+		/* Note: Most large screen styles now use [@media(min-width:2560px)] classes in HTML */
+		@media (min-width: 2560px) {
+			/* Logo and social icons - Already converted to Tailwind */
+
+            /* Booking Widget - Minimized State */
+            .booking-minimized {
+                width: 55rem !important; /* 880px - increased from 720px */
+                max-width: none !important;
+                height: 11rem !important; /* 176px - increased from 144px */
+            }
+
+            
+
+            
+            #booking-header h3 {
+                font-size: 3rem !important; /* 48px - much larger "Book Now" text */
+                padding-bottom: 0.5rem !important;
+            }
+            
+            #minimize-btn {
+                font-size: 3.5rem !important; /* 56px - larger minimize button */
+                padding: 1rem 1.5rem !important;
+                border-radius: 1rem !important;
+                top: 3rem !important;
+                right: 2rem !important;
+            }
+            
+            /* Booking Widget Content */
+            #booking-content {
+                max-height: 70rem !important; /* 1120px - larger content area */
+                padding: 3rem !important; /* More padding */
+            }
+            
+            /* Booking Widget Content Sizing */
+            #booking-content label {
+                font-size: 1.5rem !important; /* 24px - larger labels */
+                margin-bottom: 1.25rem !important;
+            }
+            
+            #booking-content input,
+            #booking-content select {
+                font-size: 1.75rem !important; /* 28px - larger input text */
+                padding: 1.75rem !important; /* More padding */
+                border-radius: 1.25rem !important;
+            }
+            
+            #booking-content button {
+                font-size: 1.75rem !important; /* 28px - larger button text */
+                padding: 1.75rem 2.5rem !important;
+                border-radius: 1.25rem !important;
+            }
+            
+            #booking-content .mb-4 {
+                margin-bottom: 2.5rem !important; /* More spacing between fields */
+            }
+            
+            #booking-content .grid {
+                gap: 1.5rem !important; /* Larger gap between grid items */
+            }
+
+            /* icon-img and logo-text - Already converted to Tailwind */
+			
+			/* Home Content, Navigation, Theme Toggle, Hero Text - Already converted to Tailwind */
+			/* Styles now use [@media(min-width:2560px)] classes in HTML */
+		}
+        
+        /* ====================================
+           PHASE 3: CUSTOM UTILITY CLASSES
+           Converted from @apply to plain CSS for Tailwind v4 compatibility
+           ==================================== */
+        
+        /* Mobile Menu Link Pattern */
+        .menu-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 0.875rem;
+            letter-spacing: 0.1em;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-link:hover {
+            background-color: rgba(154, 173, 122, 0.1);
+            color: var(--text-primary);
+        }
+        
+        .theme-dark .menu-link:hover {
+            background-color: rgba(57, 255, 20, 0.1);
+        }
+        
+        /* Button Base Styles */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.75rem;
+            border: 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        /* Responsive Text Patterns */
+        .text-responsive-lg {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (min-width: 2560px) {
+            .text-responsive-lg {
+                font-size: 2rem;
+                line-height: 2;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        /* Section Title Pattern */
+        .title-section {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        @media (min-width: 768px) {
+            .title-section {
+                font-size: 2.25rem;
+            }
+        }
+        
+        @media (min-width: 2560px) {
+            .title-section {
+                font-size: 5rem;
+            }
+        }
+        
+        /* Card Hover Effect Pattern */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-0.5rem);
+        }
+        
+        /* Responsive Container */
+        .container-responsive {
+            max-width: 79rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        @media (min-width: 2560px) {
+            .container-responsive {
+                max-width: 235rem;
+            }
+        }
+        
+        /* Section Spacing */
+        .section-spacing {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        
+        @media (min-width: 2560px) {
+            .section-spacing {
+                padding-left: 12rem;
+                padding-right: 12rem;
+            }
+        }
+

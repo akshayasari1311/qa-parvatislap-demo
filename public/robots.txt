@@ -1,0 +1,26 @@
+User-agent: *
+Allow: /
+Allow: /llms.txt
+Allow: /ai.txt
+
+# AI crawlers (explicit allow)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Block internal/utility paths
+Disallow: /api/
+Disallow: /admin/
+
+Sitemap: https://parvatislap.com/sitemap.xml

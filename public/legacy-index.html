@@ -1,0 +1,2318 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Parvati's Lap - Luxury Himalayan Resort</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'forest-green': '#556b2f',
+                        'sage-green': '#9aad7a',
+                        'warm-brown': '#8b4513',
+                        'muted-gray': '#9ca3af',
+                        'text-dark': '#111827',
+                        'nature-green': '#6b8e23',
+                        'earth-brown': '#8b7355',
+                        'sky-blue': '#87ceeb',
+                        'whatsapp-green': '#556b2f',
+                        'olive-green': '#808000',
+                        'olive-light': '#9aad7a',
+                        'olive-dark': '#556b2f',
+                        'neon-green': '#39ff14',
+                        'dark-forest': '#1B3B2F',
+                        'dark-emerald': '#0F1F17',
+                        'rich-green': '#2d5a3d'
+                    },
+                    fontFamily: {
+                        'system': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
+                    },
+                    backdropBlur: {
+                        'xs': '2px'
+                    },
+                    maxWidth: {
+                        '79rem': '79rem'
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        // Rain drops creation
+        function createRainDrops() {
+            const rainOverlay = document.getElementById('rainOverlay');
+            if (!rainOverlay) return;
+            const dropCount = 40;
+            for (let i = 0; i < dropCount; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'rain-drop';
+                drop.style.left = Math.random() * 100 + '%';
+                drop.style.width = Math.random() * 3 + 1 + 'px';
+                drop.style.height = Math.random() * 20 + 10 + 'px';
+                drop.style.animationDelay = Math.random() * 5 + 's';
+                drop.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                rainOverlay.appendChild(drop);
+            }
+        }
+
+        // Theme toggle
+        function initThemeToggle() {
+            const body = document.body;
+            const toggle = document.getElementById('theme-toggle');
+            const icon = document.getElementById('theme-icon');
+            const label = document.getElementById('theme-label');
+            const toggleMobile = document.getElementById('theme-toggle-mobile');
+            const iconMobile = document.getElementById('theme-icon-mobile');
+            const labelMobile = document.getElementById('theme-label-mobile');
+
+            function updateUI(mode) {
+                if (mode === 'dark') {
+                    icon.textContent = 'ðŸŒž';
+                    label.textContent = 'Dark';
+                    iconMobile.textContent = 'ðŸŒž';
+                    labelMobile.textContent = 'Dark Mode';
+                    body.classList.remove('theme-light');
+                    body.classList.add('theme-dark');
+                } else {
+                    icon.textContent = 'ðŸŒ™';
+                    label.textContent = 'Light';
+                    iconMobile.textContent = 'ðŸŒ™';
+                    labelMobile.textContent = 'Light Mode';
+                    body.classList.remove('theme-dark');
+                    body.classList.add('theme-light');
+                }
+            }
+
+            let current = localStorage.getItem('theme') || 'light';
+            updateUI(current);
+
+            toggle.addEventListener('click', () => {
+                current = (current === 'light') ? 'dark' : 'light';
+                localStorage.setItem('theme', current);
+                updateUI(current);
+            });
+
+            toggleMobile.addEventListener('click', () => {
+                current = (current === 'light') ? 'dark' : 'light';
+                localStorage.setItem('theme', current);
+                updateUI(current);
+            });
+        }
+
+        // Mobile menu toggle
+        function initMobileMenu() {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menuClose = document.getElementById('mobile-menu-close');
+            const menuOverlay = document.getElementById('mobile-menu-overlay');
+            const menuDrawer = document.getElementById('mobile-menu-drawer');
+            const menuLinks = document.querySelectorAll('.mobile-menu-link');
+
+            function openMenu() {
+                menuDrawer.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMenu() {
+                menuDrawer.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            menuBtn.addEventListener('click', openMenu);
+            menuClose.addEventListener('click', closeMenu);
+            menuOverlay.addEventListener('click', closeMenu);
+            
+            // Close menu when clicking a link
+            menuLinks.forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+
+            // Close menu on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && menuDrawer.classList.contains('active')) {
+                    closeMenu();
+                }
+            });
+        }
+
+        // Gallery navigation with continuous auto-scroll
+        function initGalleryNavigation() {
+            const galleries = document.querySelectorAll('.gallery-container');
+            
+            galleries.forEach(container => {
+                const track = container.querySelector('.gallery-track, .auto-scroll-track');
+                const prevBtn = container.querySelector('.gallery-prev');
+                const nextBtn = container.querySelector('.gallery-next');
+                
+                if (!track || !prevBtn || !nextBtn) return;
+                
+                let scrollPosition = 0;
+                const scrollSpeed = 0.6; // Smooth speed (pixels per frame)
+                let isScrolling = true;
+                let animationId;
+                
+                // Clone all items for seamless loop
+                const originalItems = Array.from(track.children);
+                originalItems.forEach(item => {
+                    const clone = item.cloneNode(true);
+                    track.appendChild(clone);
+                });
+                
+                function continuousScroll() {
+                    if (!isScrolling) return;
+                    
+                    scrollPosition += scrollSpeed;
+                    const trackWidth = track.scrollWidth / 2; // Half because we cloned items
+                    
+                    if (scrollPosition >= trackWidth) {
+                        scrollPosition = 0;
+                    }
+                    
+                    track.style.transform = `translateX(-${scrollPosition}px)`;
+                    track.style.transition = 'none';
+                    
+                    animationId = requestAnimationFrame(continuousScroll);
+                }
+                
+                function stopScroll() {
+                    isScrolling = false;
+                    if (animationId) {
+                        cancelAnimationFrame(animationId);
+                    }
+                }
+                
+                function startScroll() {
+                    isScrolling = true;
+                    continuousScroll();
+                }
+                
+                // Manual navigation
+                prevBtn.addEventListener('click', () => {
+                    stopScroll();
+                    scrollPosition = Math.max(0, scrollPosition - 424); // item width + gap
+                    track.style.transform = `translateX(-${scrollPosition}px)`;
+                    track.style.transition = 'transform 0.4s ease';
+                    setTimeout(startScroll, 3000);
+                });
+                
+                nextBtn.addEventListener('click', () => {
+                    stopScroll();
+                    scrollPosition += 424; // item width + gap
+                    track.style.transform = `translateX(-${scrollPosition}px)`;
+                    track.style.transition = 'transform 0.4s ease';
+                    setTimeout(startScroll, 3000);
+                });
+                
+                // Pause on hover
+                container.addEventListener('mouseenter', stopScroll);
+                container.addEventListener('mouseleave', startScroll);
+                
+                // Start continuous scroll
+                startScroll();
+            });
+        }
+
+        // Auto-scroll galleries
+        function initAutoScroll() {
+            const galleries = document.querySelectorAll('.auto-scroll-track');
+            galleries.forEach(track => {
+                let scrollPosition = 0;
+                const scrollSpeed = 0.3;
+                let isScrolling = true;
+                
+                function autoScroll() {
+                    if (!isScrolling) return;
+                    
+                    scrollPosition += scrollSpeed;
+                    const maxScroll = track.scrollWidth - track.parentElement.offsetWidth;
+                    
+                    if (scrollPosition >= maxScroll) {
+                        scrollPosition = 0;
+                    }
+                    
+                    track.style.transform = `translateX(-${scrollPosition}px)`;
+                    requestAnimationFrame(autoScroll);
+                }
+                
+                track.parentElement.addEventListener('mouseenter', () => {
+                    isScrolling = false;
+                });
+                
+                track.parentElement.addEventListener('mouseleave', () => {
+                    isScrolling = true;
+                    autoScroll();
+                });
+                
+                autoScroll();
+            });
+        }
+
+        // Fullscreen image modal with carousel for accommodation cards
+        function initImageModal() {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const carouselContainer = document.getElementById('carouselContainer');
+            const carouselTrack = document.getElementById('carouselTrack');
+            const closeBtn = document.getElementById('closeImageModal');
+            let autoScrollInterval;
+            let currentSlide = 0;
+            
+            // Handle accommodation cards with carousel
+            document.querySelectorAll('.accommodation-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const images = card.getAttribute('data-images');
+                    if (images) {
+                        const imageArray = images.split(',');
+                        showCarousel(imageArray);
+                    }
+                });
+            });
+            
+            // Handle regular zoomable images
+            document.querySelectorAll('.zoomable-image:not(.accommodation-card)').forEach(img => {
+                img.addEventListener('click', () => {
+                    modal.classList.add('active');
+                    modalImg.style.display = 'block';
+                    carouselContainer.style.display = 'none';
+                    modalImg.src = img.src;
+                    modalImg.alt = img.alt;
+                });
+            });
+            
+            function showCarousel(images) {
+                modal.classList.add('active');
+                modalImg.style.display = 'none';
+                carouselContainer.style.display = 'flex';
+                
+                // Clear previous images
+                carouselTrack.innerHTML = '';
+                currentSlide = 0;
+                
+                // Add images to carousel
+                images.forEach((imgSrc, index) => {
+                    const img = document.createElement('img');
+                    img.src = imgSrc.trim();
+                    img.className = 'carousel-slide';
+                    carouselTrack.appendChild(img);
+                });
+                
+                updateCarousel();
+                startAutoScroll();
+            }
+            
+            function updateCarousel() {
+                const slides = carouselTrack.querySelectorAll('.carousel-slide');
+                if (slides.length === 0) return;
+                
+                slides.forEach((slide, index) => {
+                    slide.classList.remove('carousel-slide-prev', 'carousel-slide-active', 'carousel-slide-next');
+                    
+                    const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+                    const nextIndex = (currentSlide + 1) % slides.length;
+                    
+                    if (index === prevIndex) {
+                        slide.classList.add('carousel-slide-prev');
+                    } else if (index === currentSlide) {
+                        slide.classList.add('carousel-slide-active');
+                    } else if (index === nextIndex) {
+                        slide.classList.add('carousel-slide-next');
+                    }
+                });
+            }
+            
+            function nextSlide() {
+                const slides = carouselTrack.querySelectorAll('.carousel-slide');
+                if (slides.length === 0) return;
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateCarousel();
+            }
+            
+            function prevSlide() {
+                const slides = carouselTrack.querySelectorAll('.carousel-slide');
+                if (slides.length === 0) return;
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                updateCarousel();
+            }
+            
+            function startAutoScroll() {
+                if (autoScrollInterval) clearInterval(autoScrollInterval);
+                autoScrollInterval = setInterval(nextSlide, 2500); // 2.5 seconds delay
+            }
+            
+            // Navigation buttons
+            document.getElementById('carouselPrev').addEventListener('click', (e) => {
+                e.stopPropagation();
+                stopAutoScroll();
+                prevSlide();
+                setTimeout(startAutoScroll, 5000); // Resume after 5 seconds
+            });
+            
+            document.getElementById('carouselNext').addEventListener('click', (e) => {
+                e.stopPropagation();
+                stopAutoScroll();
+                nextSlide();
+                setTimeout(startAutoScroll, 5000); // Resume after 5 seconds
+            });
+            
+            function stopAutoScroll() {
+                if (autoScrollInterval) {
+                    clearInterval(autoScrollInterval);
+                    autoScrollInterval = null;
+                }
+            }
+            
+            function closeModal() {
+                modal.classList.remove('active');
+                modalImg.src = '';
+                stopAutoScroll();
+            }
+            
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+        }
+
+        // Booking widget functionality
+        function initBookingWidget() { 
+            const minimizeBtn = document.getElementById('minimize-btn');
+            const bookingContent = document.getElementById('booking-content');
+            const bookingHeader = document.getElementById('booking-header');
+            const bookingWidget = document.getElementById('booking-widget');
+            
+            function setCollapsed(collapsed) {
+                if (collapsed) {
+                    bookingContent.style.display = 'none';
+                    minimizeBtn.textContent = '+';
+                    bookingWidget.classList.add('booking-minimized');
+                } else {
+                    bookingContent.style.display = '';
+                    minimizeBtn.textContent = 'âˆ’';
+                    bookingWidget.classList.remove('booking-minimized');
+                }
+            }
+            
+            let collapsed = true;
+            setCollapsed(collapsed);
+            
+            minimizeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                collapsed = !collapsed;
+                setCollapsed(collapsed);
+            });
+            
+            bookingHeader.addEventListener('click', () => {
+                collapsed = !collapsed;
+                setCollapsed(collapsed);
+            });
+        }
+
+        // WhatsApp contact
+        function initWhatsAppContact() {
+            const whatsappBtn = document.getElementById('whatsappBtn');
+            
+            whatsappBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                const whatsappMessage = `Hello! I'm ${name}\nEmail: ${email}\nMessage: ${message}`;
+                const whatsappUrl = `https://wa.me/919082229363?text=${encodeURIComponent(whatsappMessage)}`;
+                window.open(whatsappUrl, '_blank');
+            });
+        }
+
+        // Initialize all functions when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            createRainDrops();
+            initThemeToggle();
+            initMobileMenu();
+            initGalleryNavigation();
+            initAutoScroll();
+            initImageModal();
+            initBookingWidget();
+            initWhatsAppContact();
+        });
+    </script>
+    <style>
+        .theme-dark {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --text-primary: #e6f4e6;
+            --text-secondary: #9fb3a0;
+            --muted: #7a8a7a;
+            --border-color: rgba(154, 173, 122, 0.2);
+        }
+        .theme-light {
+            --bg-primary: #fefffe;
+            --bg-secondary: #f8fdf8;
+            --text-primary: #1a2e1a;
+            --text-secondary: #4a6b4a;
+            --muted: #6b8a6b;
+            --border-color: #d4e6d4;
+        }
+		
+		.theme-light .hero-title {
+            color: #ffffff;
+            text-shadow: 
+                0 0 30px rgba(57, 255, 20, 0.4),
+                0 0 60px rgba(57, 255, 20, 0.25),
+                2px 2px 8px rgba(0, 0, 0, 0.9),
+                4px 4px 16px rgba(0, 0, 0, 0.7),
+                6px 6px 24px rgba(0, 0, 0, 0.5);
+        }
+		
+		.theme-light .hero-subtitle,
+        .theme-light .hero-location {
+            color: #ffffff;
+            text-shadow: 
+                0 0 20px rgba(57, 255, 20, 0.3),
+                2px 2px 6px rgba(0, 0, 0, 0.8),
+                3px 3px 12px rgba(0, 0, 0, 0.6),
+                4px 4px 18px rgba(0, 0, 0, 0.4);
+        }
+		
+        .bg-primary { background: var(--bg-primary); }
+        .bg-secondary { background: var(--bg-secondary); }
+        .text-primary { color: var(--text-primary); }
+        .text-secondary { color: var(--text-secondary); }
+        .text-muted { color: var(--muted); }
+        .border-theme { border-color: var(--border-color); }
+
+        /* Enhanced Dark mode with dramatic green spray paint effect */
+        .theme-dark body {
+            background: #000000;
+            position: relative;
+        }
+        
+        .theme-dark body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                /* Large spray from top right */
+                radial-gradient(ellipse 1200px 900px at 98% 2%, rgba(57, 255, 20, 0.25) 0%, rgba(45, 90, 61, 0.18) 25%, rgba(57, 255, 20, 0.12) 40%, transparent 65%),
+                radial-gradient(ellipse 1000px 700px at 95% 8%, rgba(57, 255, 20, 0.2) 0%, rgba(45, 90, 61, 0.15) 30%, transparent 55%),
+                
+                /* Medium spray from right side */
+                radial-gradient(ellipse 900px 600px at 92% 25%, rgba(57, 255, 20, 0.18) 0%, rgba(45, 90, 61, 0.12) 35%, transparent 60%),
+                radial-gradient(ellipse 800px 500px at 96% 35%, rgba(57, 255, 20, 0.15) 0%, rgba(45, 90, 61, 0.1) 40%, transparent 65%),
+                
+                /* Center spray effects */
+                radial-gradient(ellipse 1100px 800px at 88% 45%, rgba(57, 255, 20, 0.16) 0%, rgba(45, 90, 61, 0.11) 30%, transparent 55%),
+                radial-gradient(ellipse 950px 650px at 85% 55%, rgba(57, 255, 20, 0.14) 0%, rgba(45, 90, 61, 0.09) 35%, transparent 60%),
+                
+                /* Lower spray effects */
+                radial-gradient(ellipse 1000px 750px at 90% 70%, rgba(57, 255, 20, 0.17) 0%, rgba(45, 90, 61, 0.13) 32%, transparent 58%),
+                radial-gradient(ellipse 850px 600px at 94% 80%, rgba(57, 255, 20, 0.19) 0%, rgba(45, 90, 61, 0.14) 38%, transparent 62%),
+                
+                /* Bottom spray */
+                radial-gradient(ellipse 900px 650px at 87% 95%, rgba(57, 255, 20, 0.21) 0%, rgba(45, 90, 61, 0.16) 35%, transparent 60%),
+                
+                /* Additional smaller spray effects for texture */
+                radial-gradient(ellipse 600px 400px at 82% 15%, rgba(57, 255, 20, 0.08) 0%, rgba(45, 90, 61, 0.05) 25%, transparent 45%),
+                radial-gradient(ellipse 550px 350px at 89% 40%, rgba(57, 255, 20, 0.07) 0%, rgba(45, 90, 61, 0.04) 20%, transparent 40%),
+                radial-gradient(ellipse 500px 300px at 91% 65%, rgba(57, 255, 20, 0.06) 0%, rgba(45, 90, 61, 0.03) 18%, transparent 38%),
+                
+                /* Subtle left side spray for balance */
+                radial-gradient(ellipse 400px 300px at 5% 20%, rgba(57, 255, 20, 0.05) 0%, rgba(45, 90, 61, 0.03) 30%, transparent 50%),
+                radial-gradient(ellipse 350px 250px at 8% 60%, rgba(57, 255, 20, 0.04) 0%, rgba(45, 90, 61, 0.02) 25%, transparent 45%);
+            pointer-events: none;
+            z-index: -1;
+            animation: subtleGlow 8s ease-in-out infinite alternate;
+        }
+        
+        @keyframes subtleGlow {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        
+        /* Hero text in dark mode - white with enhanced shadows */
+        .theme-dark .hero-title {
+            color: #ffffff;
+            text-shadow: 
+                0 0 30px rgba(57, 255, 20, 0.4),
+                0 0 60px rgba(57, 255, 20, 0.25),
+                2px 2px 8px rgba(0, 0, 0, 0.9),
+                4px 4px 16px rgba(0, 0, 0, 0.7),
+                6px 6px 24px rgba(0, 0, 0, 0.5);
+        }
+        
+        .theme-dark .hero-subtitle,
+        .theme-dark .hero-location {
+            color: #ffffff;
+            text-shadow: 
+                0 0 20px rgba(57, 255, 20, 0.3),
+                2px 2px 6px rgba(0, 0, 0, 0.8),
+                3px 3px 12px rgba(0, 0, 0, 0.6),
+                4px 4px 18px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Enhanced Theme Toggle Visibility */
+        #theme-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        #theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .theme-dark #theme-toggle {
+            background: rgba(57, 255, 20, 0.2);
+            border: 1px solid rgba(57, 255, 20, 0.4);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+        }
+        
+        .theme-dark #theme-toggle:hover {
+            background: rgba(57, 255, 20, 0.3);
+            border-color: rgba(57, 255, 20, 0.5);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+        }
+        
+        #theme-icon {
+            font-size: 16px;
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+        }
+        
+        .theme-dark #theme-icon {
+            filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.8));
+        }
+        
+        #theme-label {
+            color: #9ab19a;
+            font-weight: 100;
+            font-size: 12px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            opacity: 1 !important;
+        }
+        
+        .theme-dark #theme-label {
+            color: #ffffff;
+            text-shadow: 0 0 6px rgba(57, 255, 20, 0.6);
+        }
+
+        /* Car Window Rain Effect */
+        .hero-bg {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(85, 107, 47, 0.15), rgba(154, 173, 122, 0.1));
+            z-index: -1;
+        }
+
+        /* Video background enhancements */
+        .hero-video {
+            pointer-events: none;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+
+        /* Fallback for mobile devices that don't support video autoplay */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-video {
+                display: none;
+            }
+
+            .hero-bg::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(85, 107, 47, 0.15), rgba(154, 173, 122, 0.1)),
+                            url('Picture34.jpg');
+                background-size: cover;
+                background-position: center;
+                z-index: -2;
+            }
+        }
+
+        .rain-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(0.5px);
+            -webkit-backdrop-filter: blur(0.5px);
+            pointer-events: none;
+        }
+
+        .rain-drop {
+            position: absolute;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+            border-radius: 0 0 50% 50%;
+            animation: rainDrop linear infinite;
+        }
+
+        @keyframes rainDrop {
+            0% { transform: translateY(-100vh) rotate(15deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.1; }
+            100% { transform: translateY(100vh) rotate(15deg); opacity: 0; }
+        }
+
+        .hero-pattern::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon fill="%23ffffff" fill-opacity="0.02" points="0,100 25,75 50,85 75,60 100,70 100,100"/><polygon fill="%23ffffff" fill-opacity="0.01" points="0,100 20,80 40,90 60,70 80,75 100,65 100,100"/></svg>');
+            background-size: 300px 200px;
+            animation: float 20s ease-in-out infinite;
+            z-index: 0; pointer-events: none; opacity: 0.4;
+        }
+
+        @keyframes float {
+            0%,100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-10px) translateX(5px); }
+            50% { transform: translateY(-20px) translateX(0); }
+            75% { transform: translateY(-10px) translateX(-5px); }
+        }
+
+        .glass-bg { background: rgba(248, 253, 248, 0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .theme-dark .glass-bg { background: rgba(0,0,0,0.95); }
+
+        /* Glassmorphism Booking Widget - Updated with Reference Design */
+        .booking-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: none;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .theme-dark .booking-glass {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(57, 255, 20, 0.1);
+        }
+        
+        .booking-content-glass {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.05));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .theme-dark .booking-content-glass {
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.1), rgba(0, 0, 0, 0.2));
+            border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+        }
+        
+        .glass-input {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+        }
+        
+        .glass-input::placeholder { color: var(--muted); }
+        
+        .theme-dark .glass-input {
+            background: rgba(57, 255, 20, 0.05);
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            color: var(--text-primary);
+        }
+        
+        .theme-dark .glass-input::placeholder { color: var(--muted); }
+        
+        /* Booking Widget Minimized State */
+        .booking-minimized {
+            width: 223px !important; /* Exactly 223px for mobile */
+            max-width: 223px !important;
+        }
+        
+        @media (min-width: 1024px) {
+            .booking-minimized {
+                width: 15rem !important; /* Slightly larger for desktop */
+                max-width: none !important;
+            }
+        }
+
+        /* Sticky Image - REMOVED - Converted to Tailwind */
+
+        /* Enhanced Gallery Styles */
+        .gallery-container {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            border-radius: 24px;
+            padding: 32px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 20px 60px rgba(128, 128, 0, 0.1);
+        }
+        
+        .theme-dark .gallery-container {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(57, 255, 20, 0.05));
+            border: 2px solid rgba(57, 255, 20, 0.2);
+            box-shadow: 0 20px 60px rgba(57, 255, 20, 0.1);
+        }
+        
+        .gallery-track, .auto-scroll-track {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 24px;
+        }
+        
+        .gallery-item {
+            flex-shrink: 0;
+            width: 400px;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(128, 128, 0, 0.2);
+            border: 2px solid rgba(154, 173, 122, 0.2);
+        }
+        
+        .theme-dark .gallery-item {
+            border: 2px solid rgba(57, 255, 20, 0.3);
+            box-shadow: 0 10px 30px rgba(57, 255, 20, 0.2);
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(128, 128, 0, 0.3);
+            z-index: 10;
+            border-color: rgba(154, 173, 122, 0.4);
+        }
+        
+        .theme-dark .gallery-item:hover {
+            box-shadow: 0 25px 50px rgba(57, 255, 20, 0.3);
+            border-color: rgba(57, 255, 20, 0.5);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(26,46,26,0.9));
+            color: white;
+            padding: 24px;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Gallery Navigation Buttons */
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #808000;
+            border: 2px solid rgba(154, 173, 122, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            transition: all 0.3s ease;
+            z-index: 20;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .gallery-nav:hover {
+            background: #556b2f;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 10px 25px rgba(128, 128, 0, 0.4);
+        }
+        
+        .theme-dark .gallery-nav {
+            background: #39ff14;
+            color: #000;
+            border: 2px solid rgba(57, 255, 20, 0.4);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+        }
+        
+        .theme-dark .gallery-nav:hover {
+            background: #2ecc11;
+            box-shadow: 0 10px 25px rgba(57, 255, 20, 0.4);
+        }
+        
+        .gallery-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(0.9);
+        }
+        
+        .gallery-prev { left: 20px; }
+        .gallery-next { right: 20px; }
+
+        /* Section Headers - Partially Converted to Tailwind */
+        /* Note: .section-title::after pseudo-element kept for underline decoration */
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, #808000, #9aad7a);
+        }
+        
+        .theme-dark .section-title::after {
+            background: linear-gradient(90deg, #39ff14, #2ecc11);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+
+        /* Typography - REMOVED - Converted to Tailwind */
+        
+        .gallery-section-title {
+            font-size: 2.25rem;
+            font-weight: 300;
+            color: var(--text-primary);
+            margin-bottom: 32px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* Enhanced Review Cards */
+        .review-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 28px;
+            width: 380px;
+            flex-shrink: 0;
+            box-shadow: 0 10px 30px rgba(128, 128, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-dark .review-card {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(57, 255, 20, 0.05));
+            border: 2px solid rgba(57, 255, 20, 0.2);
+            box-shadow: 0 10px 30px rgba(57, 255, 20, 0.15);
+        }
+        
+        .review-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(128, 128, 0, 0.25);
+            border-color: rgba(154, 173, 122, 0.4);
+        }
+        
+        .theme-dark .review-card:hover {
+            box-shadow: 0 20px 40px rgba(57, 255, 20, 0.25);
+            border-color: rgba(57, 255, 20, 0.4);
+        }
+        
+        .review-stars {
+            color: #fbbf24;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .review-text {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-size: 1rem;
+        }
+        
+        .review-author {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced Feature Cards */
+        .feature-card {
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(128, 128, 0, 0.1);
+        }
+        
+        .theme-dark .feature-card {
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.05), rgba(0,0,0,0.8));
+            border: 2px solid rgba(57, 255, 20, 0.2);
+            box-shadow: 0 10px 30px rgba(57, 255, 20, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(128, 128, 0, 0.2);
+            border-color: rgba(154, 173, 122, 0.4);
+        }
+        
+        .theme-dark .feature-card:hover {
+            box-shadow: 0 20px 40px rgba(57, 255, 20, 0.2);
+            border-color: rgba(57, 255, 20, 0.4);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            letter-spacing: 0.05em;
+        }
+        
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Enhanced Trek Cards */
+        .trek-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            width: 350px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(128, 128, 0, 0.15);
+        }
+        
+        .theme-dark .trek-card {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(57, 255, 20, 0.05));
+            border: 2px solid rgba(57, 255, 20, 0.2);
+            box-shadow: 0 10px 30px rgba(57, 255, 20, 0.15);
+        }
+        
+        .trek-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(128, 128, 0, 0.25);
+        }
+        
+        .theme-dark .trek-card:hover {
+            box-shadow: 0 20px 40px rgba(57, 255, 20, 0.25);
+        }
+        
+        .trek-image {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .trek-distance {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #808000;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .theme-dark .trek-distance {
+            background: #39ff14;
+            color: #000;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+
+        /* Accommodation Cards */
+        .accommodation-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(128, 128, 0, 0.15);
+            cursor: pointer;
+        }
+        
+        .theme-dark .accommodation-card {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(57, 255, 20, 0.05));
+            border: 2px solid rgba(57, 255, 20, 0.2);
+            box-shadow: 0 10px 30px rgba(57, 255, 20, 0.15);
+        }
+        
+        .accommodation-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(128, 128, 0, 0.25);
+        }
+        
+        .theme-dark .accommodation-card:hover {
+            box-shadow: 0 20px 40px rgba(57, 255, 20, 0.25);
+        }
+        
+        .accommodation-image {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .accommodation-content {
+            padding: 24px;
+        }
+        
+        .accommodation-title {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+        
+        .accommodation-subtitle {
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: var(--muted);
+            margin-bottom: 12px;
+            font-style: italic;
+            opacity: 0.85;
+        }
+        
+        .accommodation-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .accommodation-price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #808000;
+        }
+        
+        .theme-dark .accommodation-price {
+            color: #39ff14;
+            text-shadow: 0 0 5px rgba(57, 255, 20, 0.5);
+        }
+
+        /* Image Modal - Updated for theme consistency */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26,46,26,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .theme-dark .image-modal {
+            background: rgba(0,0,0,0.95);
+        }
+        
+        .image-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(154, 173, 122, 0.3);
+            border: none;
+            color: white;
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .close-modal:hover {
+            background: rgba(154, 173, 122, 0.5);
+        }
+        
+        .theme-dark .close-modal {
+            background: rgba(57, 255, 20, 0.3);
+        }
+        
+        .theme-dark .close-modal:hover {
+            background: rgba(57, 255, 20, 0.5);
+        }
+        
+        /* Carousel in Modal */
+        .carousel-container {
+            display: none;
+            width: 90%;
+            max-width: 1400px;
+            height: 80%;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-track {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            gap: 20px;
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            max-width: 65%;
+            max-height: 85%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: scale(0.7);
+            filter: blur(4px);
+            z-index: 1;
+        }
+        
+        .carousel-slide-prev {
+            opacity: 0.5;
+            transform: translateX(-65%) scale(0.7);
+            filter: blur(3px);
+            z-index: 2;
+        }
+        
+        .carousel-slide-active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            filter: blur(0);
+            z-index: 3;
+            max-width: 100%;
+            max-height: 100%;
+            cursor: pointer;
+        }
+        
+        .carousel-slide-active:hover {
+            transform: translateX(0) scale(1.5);
+        }
+        
+        .carousel-slide-next {
+            opacity: 0.5;
+            transform: translateX(65%) scale(0.7);
+            filter: blur(3px);
+            z-index: 2;
+        }
+        
+        /* Carousel Navigation Arrows */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            transition: all 0.3s ease;
+            z-index: 10;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .carousel-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .theme-dark .carousel-nav {
+            background: rgba(57, 255, 20, 0.2);
+            border: 2px solid rgba(57, 255, 20, 0.4);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+        }
+        
+        .theme-dark .carousel-nav:hover {
+            background: rgba(57, 255, 20, 0.3);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
+        }
+        
+        .carousel-nav-prev {
+            left: 40px;
+        }
+        
+        .carousel-nav-next {
+            right: 40px;
+        }
+
+        /* Logo, Social Icons, WhatsApp Button, Mobile Menu - REMOVED - Converted to Tailwind */
+
+        .icon-img {
+            width: 57px;
+            height: 57px;
+        }
+
+        /* Responsive Design - REMOVED - Converted to Tailwind */
+		/* Mobile styles now use md: prefix (768px+) */
+		
+		.icon-img
+		{
+			width: 120px;
+			display: inline-block;
+		}
+		
+		/* Large Screen Optimization - 2560px x 1600px */
+		/* Note: Most large screen styles now use [@media(min-width:2560px)] classes in HTML */
+		@media (min-width: 2560px) {
+			/* Logo and social icons - Already converted to Tailwind */
+
+            /* Booking Widget - Minimized State */
+            .booking-minimized {
+                width: 55rem !important; /* 880px - increased from 720px */
+                max-width: none !important;
+                height: 11rem !important; /* 176px - increased from 144px */
+            }
+
+            
+
+            
+            #booking-header h3 {
+                font-size: 3rem !important; /* 48px - much larger "Book Now" text */
+                padding-bottom: 0.5rem !important;
+            }
+            
+            #minimize-btn {
+                font-size: 3.5rem !important; /* 56px - larger minimize button */
+                padding: 1rem 1.5rem !important;
+                border-radius: 1rem !important;
+                top: 3rem !important;
+                right: 2rem !important;
+            }
+            
+            /* Booking Widget Content */
+            #booking-content {
+                max-height: 70rem !important; /* 1120px - larger content area */
+                padding: 3rem !important; /* More padding */
+            }
+            
+            /* Booking Widget Content Sizing */
+            #booking-content label {
+                font-size: 1.5rem !important; /* 24px - larger labels */
+                margin-bottom: 1.25rem !important;
+            }
+            
+            #booking-content input,
+            #booking-content select {
+                font-size: 1.75rem !important; /* 28px - larger input text */
+                padding: 1.75rem !important; /* More padding */
+                border-radius: 1.25rem !important;
+            }
+            
+            #booking-content button {
+                font-size: 1.75rem !important; /* 28px - larger button text */
+                padding: 1.75rem 2.5rem !important;
+                border-radius: 1.25rem !important;
+            }
+            
+            #booking-content .mb-4 {
+                margin-bottom: 2.5rem !important; /* More spacing between fields */
+            }
+            
+            #booking-content .grid {
+                gap: 1.5rem !important; /* Larger gap between grid items */
+            }
+
+            /* icon-img and logo-text - Already converted to Tailwind */
+			
+			/* Home Content, Navigation, Theme Toggle, Hero Text - Already converted to Tailwind */
+			/* Styles now use [@media(min-width:2560px)] classes in HTML */
+		}
+        
+        /* ====================================
+           PHASE 3: CUSTOM UTILITY CLASSES
+           Using @apply for repeated patterns
+           ==================================== */
+        
+        /* Mobile Menu Link Pattern */
+        .menu-link {
+            @apply block px-4 py-3 text-secondary no-underline font-light text-sm tracking-[0.1em] rounded-lg transition-all duration-300 hover:bg-[rgba(154,173,122,0.1)] hover:text-primary;
+        }
+        
+        .theme-dark .menu-link:hover {
+            @apply bg-[rgba(57,255,20,0.1)];
+        }
+        
+        /* Button Base Styles */
+        .btn-primary {
+            @apply inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-xl border-0 cursor-pointer font-semibold transition-all duration-300;
+        }
+        
+        /* Responsive Text Patterns */
+        .text-responsive-lg {
+            @apply text-lg leading-[1.8] text-secondary mb-6;
+        }
+        
+        @media (min-width: 2560px) {
+            .text-responsive-lg {
+                @apply text-[2rem] leading-[2] mb-[2rem];
+            }
+        }
+        
+        /* Section Title Pattern */
+        .title-section {
+            @apply text-2xl md:text-4xl font-light tracking-[0.2em] text-primary mb-4 relative;
+        }
+        
+        @media (min-width: 2560px) {
+            .title-section {
+                @apply text-[5rem];
+            }
+        }
+        
+        /* Card Hover Effect Pattern */
+        .card-hover {
+            @apply transition-all duration-300 hover:-translate-y-2;
+        }
+        
+        /* Responsive Container */
+        .container-responsive {
+            @apply max-w-79rem mx-auto;
+        }
+        
+        @media (min-width: 2560px) {
+            .container-responsive {
+                @apply max-w-[235rem];
+            }
+        }
+        
+        /* Section Spacing */
+        .section-spacing {
+            @apply py-24 px-6;
+        }
+        
+        @media (min-width: 2560px) {
+            .section-spacing {
+                @apply py-24 px-48;
+            }
+        }
+    </style>
+	
+		
+	
+</head>
+<body class="font-system bg-primary text-primary theme-light transition-all duration-300">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 h-20 2xl:h-40 flex items-center z-50 glass-bg border-b border-theme">
+        <div class="w-full px-2 sm:px-6 lg:px-6 xl:px-8 2xl:px-10 flex items-center justify-between lg:justify-between">
+        
+        <!-- Mobile Hamburger Button - Left Side -->
+        <button id="mobile-menu-btn" class="lg:hidden inline-flex items-center justify-center p-2 rounded-lg flex-shrink-0 transition-all order-1" aria-label="Open menu">
+            <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+        
+        <!-- Logo - Center on Mobile, Left on Desktop -->
+        <div class="flex items-center gap-2 flex-shrink-0 order-2 lg:order-1 absolute left-1/2 transform -translate-x-1/2 lg:relative lg:left-auto lg:transform-none">
+            <a href="#home" class="flex items-center font-light text-xl sm:text-2xl tracking-widest no-underline text-olive-green flex-shrink-0">
+                <img src="images/logo-updated.png" alt="Parvati's Lap Logo" class="w-[69px] h-[37px] mr-3 [@media(min-width:2560px)]:w-[240px] [@media(min-width:2560px)]:h-[120px]">
+                <img src="images/logo-text.png" alt="PARVATI'S LAP" class="h-[169px] w-auto [@media(min-width:2560px)]:h-[373px] [@media(min-width:2560px)]:ml-[15px]">
+            </a>
+        </div>
+
+        <!-- Desktop Menu & Theme Toggle - Right Side -->
+        <div class="flex items-center gap-2 flex-shrink-0 order-3 lg:order-2">
+                <ul class="hidden lg:flex gap-4 xl:gap-6 items-center list-none m-0 p-0">
+                    <li class="m-0 p-0"><a href="#home" class="text-secondary text-xs 2xl:text-3xl font-light tracking-wide no-underline hover:text-forest-green transition-colors block py-2 whitespace-nowrap">HOME</a></li>
+                    <li class="m-0 p-0"><a href="#accommodations" class="text-secondary text-xs 2xl:text-3xl font-light tracking-wide no-underline hover:text-forest-green transition-colors block py-2 whitespace-nowrap">HOSTEL & VILLA</a></li>
+                    <li class="m-0 p-0"><a href="#cafe-things" class="text-secondary text-xs 2xl:text-3xl font-light tracking-wide no-underline hover:text-forest-green transition-colors block py-2 whitespace-nowrap">CAFE & THINGS TO DO</a></li>
+                    <li class="m-0 p-0"><a href="#reviews" class="text-secondary text-xs 2xl:text-3xl font-light tracking-wide no-underline hover:text-forest-green transition-colors block py-2 whitespace-nowrap">REVIEWS</a></li>
+                    <li class="m-0 p-0"><a href="#views" class="text-secondary text-xs 2xl:text-3xl font-light tracking-wide no-underline hover:text-forest-green transition-colors block py-2 whitespace-nowrap">VIEWS</a></li>
+                    <li class="m-0 p-0"><a href="#contact" class="text-secondary text-xs 2xl:text-3xl font-light tracking-wide no-underline hover:text-forest-green transition-colors block py-2 whitespace-nowrap">CONTACT</a></li>
+                </ul>
+
+                <button id="theme-toggle" class="hidden lg:inline-flex items-center gap-2 cursor-pointer transition-all ml-2 lg:ml-4 p-2 rounded-lg flex-shrink-0">
+                    <span id="theme-icon" class="text-lg leading-none [@media(min-width:2560px)]:text-[30px]">ðŸŒ™</span>
+                    <span id="theme-label" class="text-sm font-medium tracking-wide leading-none [@media(min-width:2560px)]:text-[30px]">Light</span>
+                </button>
+        </div>
+        
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu-drawer" class="fixed inset-0 z-[9999] invisible opacity-0 transition-[visibility,opacity] duration-300 [&.active]:visible [&.active]:opacity-100">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="mobile-menu-overlay"></div>
+        <div class="absolute top-0 right-0 bottom-0 w-[280px] max-w-[85vw] bg-primary shadow-[-4px_0_20px_rgba(0,0,0,0.2)] translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto [.active_&]:translate-x-0">
+            <div class="flex items-center justify-between p-6 border-b border-theme">
+                <h2 class="text-xl font-light tracking-widest text-primary">MENU</h2>
+                <button id="mobile-menu-close" class="p-2 rounded-lg transition-all" aria-label="Close menu">
+                    <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <nav class="p-6">
+                <ul class="flex flex-col gap-4 list-none m-0 p-0">
+                    <li class="m-0 p-0"><a href="#home" class="menu-link">HOME</a></li>
+                    <li class="m-0 p-0"><a href="#accommodations" class="menu-link">HOSTEL & VILLA</a></li>
+                    <li class="m-0 p-0"><a href="#cafe-things" class="menu-link">CAFE & THINGS TO DO</a></li>
+                    <li class="m-0 p-0"><a href="#reviews" class="menu-link">REVIEWS</a></li>
+                    <li class="m-0 p-0"><a href="#views" class="menu-link">VIEWS</a></li>
+                    <li class="m-0 p-0"><a href="#contact" class="menu-link">CONTACT</a></li>
+                </ul>
+                <div class="mt-8 pt-6 border-t border-theme">
+                    <button id="theme-toggle-mobile" class="inline-flex items-center gap-3 cursor-pointer transition-all p-3 rounded-lg w-full justify-center">
+                        <span id="theme-icon-mobile" class="text-2xl leading-none">ðŸŒ™</span>
+                        <span id="theme-label-mobile" class="text-base font-medium tracking-wide leading-none">Light Mode</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Booking Widget - Updated Layout -->
+    <div id="booking-widget" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-8 lg:transform-none w-11/12 max-w-[12rem] lg:w-85 rounded-3xl 2xl:rounded-[4rem] z-40 overflow-hidden transition-all duration-300 shadow-2xl booking-glass fixed bottom-4 left-1/2 transform -translate-x-1/2 lg:left-auto lg:right-8 lg:transform-none w-11/12 lg:w-85 rounded-3xl 2xl:rounded-[4rem] z-40 overflow-hidden transition-all duration-300 shadow-2xl booking-glass [@media(min-width:2560px)]:max-w-[33rem]">
+        <div id="booking-header" class="p-2 flex items-center justify-between relative booking-content-glass min-h-16 2xl:min-h-4xl cursor-pointer [@media(min-width:2560px)]:p-[1.5rem] [@media(min-width:2560px)]:min-h-[11rem]">
+            <a href="https://live.ipms247.com/booking/book-rooms-parvatislaphostelcamps" target="_blank" rel="noopener noreferrer" class="flex items-center flex-1 no-underline">
+                <!-- <div class="text-3xl opacity-100">ðŸ”ï¸</div> -->
+				<div> 
+				<img src="images/BookNow3.png" alt="Book Now" class="icon-img w-[59px] h-[59px] [@media(min-width:2560px)]:w-[155px] [@media(min-width:2560px)]:h-[155px]" >
+				</div>
+				<div> 
+                <h3 class="text-lg 2xl:text-[2.25rem] font-black tracking-tight text-yellow-400" style="padding-bottom: 8px;-webkit-text-stroke: 1px #000000;">Book Now</h3>
+				</div>
+				<!-- Minimize button - commented out for future use
+				<div>
+				<button id="minimize-btn" class="absolute top-4 right-5 bg-white bg-opacity-10 backdrop-blur-10 border border-white border-opacity-20 px-2.5 py-1.5 2xl:px-3.5 2xl:py-3 2xl:rounded-xl 2xl:text-5xl 2xl:top-4 rounded-lg text-sm cursor-pointer font-semibold hover:bg-opacity-20 hover:scale-105 transition-all">âˆ’</button>
+				</div>
+				-->
+            </a>
+            
+        </div>
+
+        <div id="booking-content" class="p-6 max-h-96 overflow-auto">
+            <div class="mb-4">
+                <label for="experienceType" class="block text-xs text-muted mb-2 uppercase tracking-wide font-semibold">Experience Type</label>
+                <select id="experienceType" class="w-full px-4 py-3 rounded-xl glass-input text-sm font-medium transition-all focus:border-white focus:border-opacity-40 focus:bg-white focus:bg-opacity-15 focus:-translate-y-0.5">
+                    <option>Hostel Stay</option>
+                    <option>Villa Stay</option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <div>
+                    <label for="checkin" class="block text-xs text-muted mb-2 uppercase tracking-wide font-semibold">Check-in</label>
+                    <input id="checkin" type="date" class="w-full px-4 py-3 rounded-xl glass-input text-sm font-medium transition-all focus:border-white focus:border-opacity-40 focus:bg-white focus:bg-opacity-15 focus:-translate-y-0.5">
+                </div>
+                <div>
+                    <label for="checkout" class="block text-xs text-muted mb-2 uppercase tracking-wide font-semibold">Check-out</label>
+                    <input id="checkout" type="date" class="w-full px-4 py-3 rounded-xl glass-input text-sm font-medium transition-all focus:border-white focus:border-opacity-40 focus:bg-white focus:bg-opacity-15 focus:-translate-y-0.5">
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="guests" class="block text-xs text-muted mb-2 uppercase tracking-wide font-semibold">Guests</label>
+                <select id="guests" class="w-full px-4 py-3 rounded-xl glass-input text-sm font-medium transition-all focus:border-white focus:border-opacity-40 focus:bg-white focus:bg-opacity-15 focus:-translate-y-0.5">
+                    <option>1 Guest</option>
+                    <option>2 Guests</option>
+                    <option>3 Guests</option>
+                    <option>4 Guests</option>
+                    <option>5 Guests</option>
+                    <option>6 Guests</option>
+                    <option>7 Guests</option>
+                    <option>8 Guests</option>
+                    <option>9 Guests</option>
+                    <option>10 Guests</option>
+                    <option>11 Guests</option>
+                    <option>12 Guests</option>
+                    <option>13 Guests</option>
+                    <option>14 Guests</option>
+                </select>
+            </div>
+
+            <a href="https://live.ipms247.com/booking/book-rooms-parvatislaphostelcamps" target="_blank"
+                class="w-full inline-block bg-gradient-to-r from-black to-gray-800 text-white border-0 px-4 py-3.5 rounded-xl text-sm font-semibold cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg uppercase tracking-wide relative overflow-hidden text-center no-underline">
+                <span class="relative z-10">Book Now</span>
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white via-opacity-20 to-transparent transform -translate-x-full hover:translate-x-full transition-transform duration-500"></div>
+                <span class="block text-[0.95em] text-yellow-300 font-normal relative z-10 mt-1">click here to book online</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="h-screen flex items-center justify-center relative hero-bg overflow-hidden">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="InShot_20250913_183717554_new.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="rain-overlay" id="rainOverlay"></div>
+        <div class="hero-pattern absolute inset-0"></div>
+        <div class="text-center z-10 text-white pt-5 relative">
+            <!-- 
+                This is the main heading in the hero section ("PARVATI'S LAP").
+                It uses Tailwind CSS responsive sizing for different screens:
+                  - text-6xl: base size
+                  - md:text-8xl: medium devices (â‰¥768px)
+                  - lg:text-9xl: large devices (â‰¥1024px)
+                  - 2xl:text-[10rem]: 2xl screens (â‰¥1536px), sets font size to 10rem
+                  - [@media (min-width:2560px)]: uses a custom class for even larger screens (â‰¥2560px)
+                To control the font size for screens 2560px and wider, we add:
+                  - [@media (min-width:2560px)]:text-[12rem]
+                which sets a font size of 12rem for very large displays.
+                (Note: Tailwind JIT allows arbitrary breakpoints/classes in square brackets.)
+
+                Final effect: 
+                The heading gets bigger responsively, making sure it remains visually striking on huge screens.
+            -->
+            <h1 class="hero-title text-6xl md:text-8xl lg:text-9xl 2xl:text-[10rem] [@media(min-width:2560px)]:text-[12rem] font-light tracking-widest mb-4">
+                PARVATI'S LAP
+            </h1>
+            <p class="hero-subtitle text-lg md:text-xl lg:text-2xl font-light [@media(min-width:2560px)]:text-[3rem] tracking-wider mb-2 opacity-95">A Hostel & Villa in the Heart of the Himalayas</p>
+            <p class="hero-location text-sm md:text-base lg:text-lg font-light opacity-85 mb-7 leading-relaxed [@media(min-width:2560px)]:text-[2rem] [@media(min-width:2560px)]:leading-[3.75rem]">Lapas Village, Kasol, Parvati Valley â€” Adventure & Rest</p>
+        </div>
+    </section>
+
+    <!-- Home Content Section -->
+    <section class="bg-primary py-24 px-6 [@media(min-width:2560px)]:py-24 [@media(min-width:2560px)]:px-48">
+        <div class="max-w-79rem mx-auto [@media(min-width:2560px)]:max-w-[235rem]">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div>
+                    <span class="block text-[36px] font-light tracking-wide text-olive-light uppercase mb-4 [@media(min-width:2560px)]:text-[5rem] [@media(min-width:2560px)]:mb-8 [@media(min-width:2560px)]:tracking-[0.05em]" >WELCOME TO PARADISE</span>
+                    <h2 class="text-[20px] block font-light tracking-wider text-primary mb-8 [@media(min-width:2560px)]:text-[2.5rem]">Where Mountains Meet Luxury</h2>
+
+                    <p class="text-lg leading-[1.8] text-secondary mb-6 [@media(min-width:2560px)]:text-[2rem] [@media(min-width:2560px)]:leading-[2] [@media(min-width:2560px)]:mb-[2rem]">
+                        Parvati's Lap Hostel & Villa is the ideal starting point for your adventures. Wake up to the fresh mountain air, then set out to explore nearby treks, vibrant villages, and cascading waterfalls across the mountain. After a day of adventure, return to our peaceful retreat to relax by a bonfire, share stories with fellow travelers, and gaze at a sky full of stars untouched by city lights.
+                    </p>
+
+                    <p class="text-lg leading-[1.8] text-secondary mb-6 [@media(min-width:2560px)]:text-[2rem] [@media(min-width:2560px)]:leading-[2] [@media(min-width:2560px)]:mb-[2rem]">
+                        We are committed to providing a space that feels both secluded and connected. Our dedication to a high-quality guest experience, combined with our stunning location, makes Parvati's Lap the premier choice for your Himalayan adventure.
+                    </p>
+                </div>
+
+                <div class="sticky top-[100px] h-fit [@media(min-width:2560px)]:top-[120px]">
+                    <div class="h-96 [@media(min-width:2560px)]:h-[42rem] rounded-xl overflow-hidden relative">
+                        <img src="images/home/home.jpg" alt="Mountain Resort" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hostel & Villa Section -->
+    <section id="accommodations" class="bg-secondary py-24 px-6 [@media(min-width:2560px)]:py-24 [@media(min-width:2560px)]:px-48">
+        <div class="max-w-79rem [@media(min-width:2560px)]:max-w-[235rem] mx-auto">
+            <div class="text-center mb-12">
+                <h1 class="section-title title-section">HOSTEL & VILLA</h1>
+                <p class="text-lg text-secondary max-w-[600px] mx-auto leading-normal [@media(min-width:2560px)]:text-[2rem] [@media(min-width:2560px)]:max-w-[59rem]">Choose from our range of comfortable stays, from budget-friendly hostel beds to luxury private villas.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Meghbari Luxury Villa -->
+                <!-- To add more images, add them in the data-images attribute separated by commas like:
+                     data-images="images/villa1.jpg,images/villa2.jpg,images/villa3.jpg,images/villa4.jpg,images/villa5.jpg,images/villa6.jpg"
+                     Add as many images as you want - they will all auto-scroll in loop -->
+                <div class="accommodation-card" data-images="images/MeghbariVilla/Villa1.jpg,
+                images/MeghbariVilla/Villa2.jpg,
+                images/MeghbariVilla/Villa3.jpg,
+                images/MeghbariVilla/Villa4.jpg,
+                images/MeghbariVilla/Villa5.jpg,
+                images/MeghbariVilla/Villa6.jpg,
+                images/MeghbariVilla/Villa7.jpg,
+                images/MeghbariVilla/Villa8.jpg,
+                images/MeghbariVilla/Villa9.jpg,
+                images/MeghbariVilla/Villa10.jpg">
+                    <div class="accommodation-image [@media(min-width:2560px)]:h-[26rem]">
+                        <!--<img src="https://images.unsplash.com/photo-1464822759844-d150baec0494?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Meghbari Luxury Villa" class="w-full h-full object-cover">-->
+                        <img src="images/MeghbariVilla/Villa1.jpg" alt="Meghbari Luxury Villa" class="w-full h-full object-cover">
+                    </div>
+                    <div class="accommodation-content [@media(min-width:2560px)]:p-[82px]">
+                        <h3 class="accommodation-title [@media(min-width:2560px)]:text-[3rem]">Meghbari Luxury Villa</h3>
+                        <p class="accommodation-description [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem]">Exclusive private villa with 180-degree glacier views and complete seclusion. Perfect for honeymoon couples seeking ultimate luxury.</p>
+                        <!--<div class="accommodation-price">â‚¹15,000 / night</div>-->
+                    </div>
+                </div>
+                
+                <!-- 4 Beds Wood Room -->
+                <!-- To add more images, add them in the data-images attribute separated by commas like:
+                     data-images="images/wood1.jpg,images/wood2.jpg,images/wood3.jpg,images/wood4.jpg,images/wood5.jpg"
+                     Add as many images as you want - they will all auto-scroll in loop -->
+                <div class="accommodation-card" data-images="images/4BedsWoodRoom/WoodRoom1.jpg,
+                images/4BedsWoodRoom/WoodRoom2.jpg,
+                images/4BedsWoodRoom/WoodRoom3.jpg,
+                images/4BedsWoodRoom/WoodRoom4.jpg,
+                images/4BedsWoodRoom/WoodRoom5.jpg">
+                    <div class="accommodation-image [@media(min-width:2560px)]:h-[26rem]">
+                        <!--<img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="4 Beds Wood Room" class="w-full h-full object-cover">-->
+                        <img src="images/4BedsWoodRoom/WoodRoom1.jpg" alt="4 Beds Wood Room" class="w-full h-full object-cover">
+                    </div>
+                    <div class="accommodation-content [@media(min-width:2560px)]:p-[82px]">
+                        <h3 class="accommodation-title [@media(min-width:2560px)]:text-[3rem]">4 Beds Wood Room</h3>
+                        <p class="accommodation-subtitle [@media(min-width:2560px)]:text-[21px]">Attached Washroom</p>
+                        <p class="accommodation-description [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem]">Cozy wooden room with traditional Himachali architecture, accommodating up to 4 guests with mountain views.</p>
+                        <!--<div class="accommodation-price">â‚¹3,200 / night</div>-->
+                    </div>
+                </div>
+                
+                <!-- 3 Beds Balcony Room -->
+                <!-- To add more images, add them in the data-images attribute separated by commas like:
+                     data-images="images/attic1.jpg,images/attic2.jpg,images/attic3.jpg,images/attic4.jpg,images/attic5.jpg"
+                     Add as many images as you want - they will all auto-scroll in loop -->
+                <div class="accommodation-card" data-images="images/3BedsBalconyRoom/3BedsBalconyRoom1.jpg,
+                images/3BedsBalconyRoom/3BedsBalconyRoom2.jpg,
+                images/3BedsBalconyRoom/3BedsBalconyRoom3.jpg,
+                images/3BedsBalconyRoom/3BedsBalconyRoom4.jpg,
+                images/3BedsBalconyRoom/3BedsBalconyRoom5.jpg">
+                    <div class="accommodation-image [@media(min-width:2560px)]:h-[26rem]">
+                        <!--<img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="3 Beds Attic Room" class="w-full h-full object-cover">-->
+                        <img src="images/3BedsBalconyRoom/3BedsBalconyRoom1.jpg" alt="3 Beds Attic Room" class="w-full h-full object-cover">
+                    </div>
+                    <div class="accommodation-content [@media(min-width:2560px)]:p-[82px]">
+                        <h3 class="accommodation-title [@media(min-width:2560px)]:text-[3rem]">3 Beds Attic Room</h3>
+                        <p class="accommodation-subtitle [@media(min-width:2560px)]:text-[21px]">Inter connected with 4 bed Balcony room <br>Attached Washroom</p>
+                        <p class="accommodation-description [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem]">Charming attic room with unique architecture and stunning valley views, perfect for small groups.</p>
+                        <!--<div class="accommodation-price">â‚¹2,400 / night</div>-->
+                    </div>
+                </div>
+                
+                <!-- 4 Beds Balcony Room -->
+                <!-- To add more images, add them in the data-images attribute separated by commas like:
+                     data-images="images/balcony1.jpg,images/balcony2.jpg,images/balcony3.jpg,images/balcony4.jpg,images/balcony5.jpg"
+                     Add as many images as you want - they will all auto-scroll in loop -->
+                <div class="accommodation-card" data-images="images/4BedsBalconyRoom/4BedsBalconyRoom1.jpg,
+                images/4BedsBalconyRoom/4BedsBalconyRoom2.jpg,
+                images/4BedsBalconyRoom/4BedsBalconyRoom3.jpg,
+                images/4BedsBalconyRoom/4BedsBalconyRoom4.jpg">
+                    <div class="accommodation-image [@media(min-width:2560px)]:h-[26rem]">
+                        <!--<img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="4 Beds Balcony Room" class="w-full h-full object-cover">-->
+                        <img src="images/4BedsBalconyRoom/4BedsBalconyRoom1.jpg" alt="4 Beds Balcony Room" class="w-full h-full object-cover">
+                    </div>
+                    <div class="accommodation-content [@media(min-width:2560px)]:p-[82px]">
+                        <h3 class="accommodation-title [@media(min-width:2560px)]:text-[3rem]">4 Beds Balcony Room</h3>
+                        <p class="accommodation-subtitle [@media(min-width:2560px)]:text-[21px]">Interconnected with 3 Beds Attic Room <br>Attached Washroom</p>
+                        <p class="accommodation-description [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem]">Spacious room with private balcony offering panoramic mountain views and fresh Himalayan air.</p>
+                        <!--<div class="accommodation-price">â‚¹3,600 / night</div>-->
+                    </div>
+                </div>
+                
+                <!-- 4 Beds Hemp Room -->
+                <!-- To add more images, add them in the data-images attribute separated by commas like:
+                     data-images="images/hemp1.jpg,images/hemp2.jpg,images/hemp3.jpg,images/hemp4.jpg,images/hemp5.jpg"
+                     Add as many images as you want - they will all auto-scroll in loop -->
+                <div class="accommodation-card" data-images="images/4BedsHempRoom/HempRoom1.jpg,
+                images/4BedsHempRoom/HempRoom2.jpg,
+                images/4BedsHempRoom/HempRoom3.jpg,
+                images/4BedsHempRoom/HempRoom4.jpg">
+                    <div class="accommodation-image [@media(min-width:2560px)]:h-[26rem]">
+                        <!--<img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="4 Beds Hemp Room" class="w-full h-full object-cover">-->
+                        <img src="images/4BedsHempRoom/HempRoom4.jpg" alt="4 Beds Hemp Room" class="w-full h-full object-cover">
+                    </div>
+                    <div class="accommodation-content [@media(min-width:2560px)]:p-[82px]">
+                        <h3 class="accommodation-title [@media(min-width:2560px)]:text-[3rem]">4 Beds Hemp Room</h3>
+                        <p class="accommodation-subtitle [@media(min-width:2560px)]:text-[21px]">Outside Washroom</p>
+                        <p class="accommodation-description [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem]">Eco-friendly room built with natural hemp materials, offering sustainable comfort in the mountains.</p>
+                        <!--<div class="accommodation-price">â‚¹2,800 / night</div>-->
+                    </div>
+                </div>
+                
+                <!-- 14 Beds Stone Room -->
+                <!-- To add more images, add them in the data-images attribute separated by commas like:
+                     data-images="images/stone1.jpg,images/stone2.jpg,images/stone3.jpg,images/stone4.jpg,images/stone5.jpg"
+                     Add as many images as you want - they will all auto-scroll in loop -->
+                <div class="accommodation-card" data-images="images/14BedsStoneRoom/StoneRoom1.jpg,
+                images/14BedsStoneRoom/StoneRoom2.jpg,
+                images/14BedsStoneRoom/StoneRoom3.jpg,
+                images/14BedsStoneRoom/StoneRoom4.jpg,
+                images/14BedsStoneRoom/StoneRoom5.jpg">
+                    <div class="accommodation-image [@media(min-width:2560px)]:h-[26rem]">
+                        <!--<img src="https://images.unsplash.com/photo-1464822759844-d150baec0494?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="14 Beds Stone Room" class="w-full h-full object-cover">-->
+                        <img src="images/14BedsStoneRoom/StoneRoom3.jpg" alt="14 Beds Stone Room" class="w-full h-full object-cover">
+                    </div>
+                    <div class="accommodation-content [@media(min-width:2560px)]:p-[82px]">
+                        <h3 class="accommodation-title [@media(min-width:2560px)]:text-[3rem]">14 Beds Stone Room</h3>
+                        <p class="accommodation-subtitle [@media(min-width:2560px)]:text-[21px]">Outside Washroom</p>
+                        <p class="accommodation-description [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem]">Large dormitory with traditional stone construction, perfect for backpackers and budget travelers.</p>
+                        <!--<div class="accommodation-price">â‚¹800 / bed</div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cafe & Things to Do Section -->
+    <section id="cafe-things" class="bg-primary py-24 px-6 [@media(min-width:2560px)]:py-24 [@media(min-width:2560px)]:px-48">
+        <div class="max-w-79rem mx-auto [@media(min-width:2560px)]:max-w-[235rem]">
+            <div class="text-center mb-12">
+                <h1 class="section-title title-section">CAFE & THINGS TO DO</h1>
+            </div>
+            
+            <!-- Cafe Section -->
+            <div class="mb-20">
+                <h2 class="text-3xl font-light text-primary mb-8 text-center [@media(min-width:2560px)]:text-[2.75rem]">Our Cafe: ADHIKARA - A Taste of the Himalayas</h2>
+                
+                <div class="max-w-4xl [@media(min-width:2560px)]:max-w-[112rem] mx-auto mb-12">
+                    <p class="text-lg leading-[1.8] text-secondary text-center mb-6 [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
+                        Perched high on the mountain above Lapas Village, our cafe offers more than just a mealâ€”it's an experience for the soul. Surrounded by majestic glaciers and the serene Parvati Valley, our traditional restaurant and cafe is a warm and welcoming space where every bite is a tribute to the peaceful surroundings.
+                    </p>
+                    <p class="text-lg leading-[1.8] text-secondary text-center [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
+                        Based on what our guests have said, our food is a highlight of their stay. We're known for serving delicious and wholesome meals that perfectly complement a day of trekking and exploration. Whether you're craving authentic Indian cuisine or a hot cup of tea to warm you up after a trek, we are dedicated to providing a dining experience that feels like home.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="feature-card [@media(min-width:2560px)]:h-[46rem]">
+                        <!-- <span class="feature-icon">ðŸ½ï¸</span> -->
+						<span class="feature-icon">
+							<img src="images/HeartyFood5.png" alt="Hearty and Delicious Food" class="icon-img w-[130px] h-[130px] [@media(min-width:2560px)]:w-[250px] [@media(min-width:2560px)]:h-[250px]">
+						</span>
+                        <h3 class="feature-title [@media(min-width:2560px)]:text-[3rem]">Hearty and Delicious Food</h3>
+                        <p class="feature-description [@media(min-width:2560px)]:text-[28px]  [@media(min-width:2560px)]:leading-[3rem]">Our food is often described as "mind-blowing," "very good," and "tasty," with some guests mentioning that we make as per their taste.</p>
+                    </div>
+                    <div class="feature-card [@media(min-width:2560px)]:h-[46rem]">
+                        <!-- <span class="feature-icon">ðŸ </span> -->
+                        <span class="feature-icon">
+						<img src="images/TasteOfHome4.png" alt="A Taste of Home" class="icon-img w-[130px] h-[130px] [@media(min-width:2560px)]:w-[250px] [@media(min-width:2560px)]:h-[250px]">
+                        </span>
+                        <h3 class="feature-title [@media(min-width:2560px)]:text-[3rem]">A Taste of Home</h3>
+                        <p class="feature-description [@media(min-width:2560px)]:text-[28px]">Our team is committed to making you feel like family, serving meals with a hospitality that is as comforting as the food itself.</p>
+                    </div>
+                    <div class="feature-card [@media(min-width:2560px)]:h-[46rem]">
+                        <!-- <span class="feature-icon">ðŸŒ„</span> -->
+                        <span class="feature-icon">
+						<img src="images/PerfectSetting1.png" alt="The Perfect Setting" class="icon-img w-[130px] h-[130px] [@media(min-width:2560px)]:w-[250px] [@media(min-width:2560px)]:h-[250px]">
+                        </span>
+                        <h3 class="feature-title [@media(min-width:2560px)]:text-[3rem]">The Perfect Setting</h3>
+                        <p class="feature-description [@media(min-width:2560px)]:text-[28px]  [@media(min-width:2560px)]:leading-[3rem]">
+                            Enjoy your meal with an unbeatable view of the Himalayas and starry night with full moons. Our cafe and outdoor seating areas are designed for you to relax, connect with fellow travelers, and savor the peaceful ambiance and enjoy sunrises and sunsets.</p>
+                    </div>
+                </div>
+                
+                <!-- Cafe Gallery -->
+                <div class="gallery-container mb-48">
+                    <button class="gallery-nav gallery-prev [@media(min-width:2560px)]:w-[99px] [@media(min-width:2560px)]:h-[99px] [@media(min-width:2560px)]:text-[3rem]">â€¹</button>
+                    <button class="gallery-nav gallery-next [@media(min-width:2560px)]:w-[99px] [@media(min-width:2560px)]:h-[99px] [@media(min-width:2560px)]:text-[3rem]">â€º</button>
+                    
+                    <h3 class="gallery-section-title [@media(min-width:2560px)]:text-[2.75rem]">Cafe Gallery</h3>
+                    <div class="gallery-track">
+                        <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                            <img src="images/Cafe/Picture52.jpg" alt="Cafe Interior" class="zoomable-image">
+                            <div class="gallery-overlay">
+                                <h4 class="text-xl font-semibold mb-3">A Hearty Meal with a View</h4>
+                                <p class="text-sm opacity-90">Honest flavors, peaceful moments, and a touch of home</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                            <img src="images/Cafe/Picture51.jpg" alt="Mountain View Dining" class="zoomable-image">
+                            <div class="gallery-overlay">
+                                <h4 class="text-xl font-semibold mb-3">Mountain View Dining</h4>
+                                <p class="text-sm opacity-90">Dine with Himalayan backdrop</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                            <img src="images/Cafe/Picture54.jpg" alt="Outdoor Seating" class="zoomable-image">
+                            <div class="gallery-overlay">
+                                <h4 class="text-xl font-semibold mb-3">Outdoor Seating</h4>
+                                <p class="text-sm opacity-90">Al fresco dining experience</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                            <img src="images/Cafe/Picture53.jpg" alt="Cafe Interior" class="zoomable-image">
+                            <div class="gallery-overlay">
+                                <h4 class="text-xl font-semibold mb-3">Cafe Interior</h4>
+                                <p class="text-sm opacity-90">Warm and welcoming atmosphere</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                            <img src="images/Cafe/Picture56.jpg" alt="Mountain View Dining" class="zoomable-image">
+                            <div class="gallery-overlay">
+                                <h4 class="text-xl font-semibold mb-3">Mountain View Dining</h4>
+                                <p class="text-sm opacity-90">Dine with Himalayan backdrop</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                            <img src="images/Cafe/Picture50.jpg" alt="Outdoor Seating" class="zoomable-image">
+                            <div class="gallery-overlay">
+                                <h4 class="text-xl font-semibold mb-3">Outdoor Seating</h4>
+                                <p class="text-sm opacity-90">Al fresco dining experience</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                            <img src="images/Cafe/Picture55.jpg" alt="Outdoor Seating" class="zoomable-image">
+                            <div class="gallery-overlay">
+                                <h4 class="text-xl font-semibold mb-3">Outdoor Seating</h4>
+                                <p class="text-sm opacity-90">Al fresco dining experience</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Things to Do Section -->
+            <div>
+                <h2 class="text-3xl font-light text-primary mb-8 text-center [@media(min-width:2560px)]:text-[2.75rem]">THINGS TO DO</h2>
+                
+                <div class="max-w-4xl [@media(min-width:2560px)]:max-w-[112rem] mx-auto mb-12">
+                    <p class="text-lg leading-[1.8] text-secondary text-center mb-6 [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
+                        Escape the crowds and discover a true mountain sanctuary, where adventure begins right at your doorstep. We are not just a place to stay; we are your gateway to the unexplored trails, vibrant culture, and breathtaking landscapes of this legendary region.
+                    </p>
+                    
+                    <h3 class="text-2xl font-light text-primary mb-8 text-center [@media(min-width:2560px)]:text-[2.5rem]">Adventure Awaits: Hikes and Treks from Our Doorstep</h3>
+                    <p class="text-lg leading-[1.8] text-secondary text-center [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
+                        At Parvati's Lap, you are perfectly positioned to embark on some of the most stunning hikes in the Himalayas. Our location offers unparalleled access to trails that take you far from the beaten path.
+                    </p>
+                </div>
+                
+                <!-- Trek Cards -->
+                <div class="gallery-container mb-12">
+                    <button class="gallery-nav gallery-prev [@media(min-width:2560px)]:w-[99px] [@media(min-width:2560px)]:h-[99px] [@media(min-width:2560px)]:text-[3rem]">â€¹</button>
+                    <button class="gallery-nav gallery-next [@media(min-width:2560px)]:w-[99px] [@media(min-width:2560px)]:h-[99px] [@media(min-width:2560px)]:text-[3rem]">â€º</button>
+                    
+                    <div class="gallery-track">
+                        <div class="trek-card w-[280px] md:w-[350px] [@media(min-width:2560px)]:w-[40rem]">
+                            <div class="trek-image [@media(min-width:2560px)]:h-[30rem] [@media(min-width:2560px)]:w-[40rem] ">
+                                <!-- <div class="trek-distance">8 KM</div> -->
+                                <img src="images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-sargi-trek-glacier-viewpoint-forest-trail.jpg" alt="Sargi Trek" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 [@media(min-width:2560px)]:p-16">
+                                <h4 class="text-xl font-light text-primary mb-4 [@media(min-width:2560px)]:text-[3rem]">Sargi Trek</h4>
+                                <p class="accommodation-subtitle [@media(min-width:2560px)]:text-[26px]">3 hr Trek</p>
+                                <p class="text-secondary leading-relaxed [@media(min-width:2560px)]:text-[28px]  [@media(min-width:2560px)]:leading-[3rem]">Challenge yourself with the invigorating Sargi Trek. This full-day hike takes you through dense forests and over pristine streams, leading you to a breathtaking viewpoint with panoramic vistas of the surrounding glaciers and the entire Parvati Valley. A must-do for every serious trekker.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="trek-card w-[280px] md:w-[350px] [@media(min-width:2560px)]:w-[40rem]">
+                            <div class="trek-image [@media(min-width:2560px)]:h-[30rem] [@media(min-width:2560px)]:w-[40rem] ">
+                                <!-- <div class="trek-distance">5 KM</div> -->
+                                <img src="images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-shikoi-hike-village-trail-terraced-farms-family-trek.jpg" alt="Shikoi Hikes" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 [@media(min-width:2560px)]:p-16">
+                                <h4 class="text-xl font-light text-primary mb-4 [@media(min-width:2560px)]:text-[3rem]">Shikoi Hikes</h4>
+                                <p class="accommodation-subtitle [@media(min-width:2560px)]:text-[26px]">30 min trek</p>
+                                <p class="text-secondary leading-relaxed [@media(min-width:2560px)]:text-[28px]  [@media(min-width:2560px)]:leading-[3rem]">Explore the beauty of the region on the picturesque Shikoi Hikes. These shorter, more accessible trails wind through local villages and terraced farms, offering a glimpse into the traditional way of life in the mountains. It's the perfect activity to reconnect with nature and soak in the tranquil atmosphere.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="trek-card w-[280px] md:w-[350px] [@media(min-width:2560px)]:w-[40rem]">
+                            <div class="trek-image [@media(min-width:2560px)]:h-[30rem] [@media(min-width:2560px)]:w-[40rem] ">
+                                <img src="images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-kheerganga-trek-hot-spring-parvati-valley-camping.jpg" alt="Kheerganga Trek" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 [@media(min-width:2560px)]:p-16">
+                                <h4 class="text-xl font-light text-primary mb-4 [@media(min-width:2560px)]:text-[3rem]">Kheerganga Trek</h4>
+                                <p class="accommodation-subtitle [@media(min-width:2560px)]:text-[26px]">4-6 hrs trek</p>
+                                <p class="text-secondary leading-relaxed [@media(min-width:2560px)]:text-[28px]  [@media(min-width:2560px)]:leading-[3rem]">Famous hot springs trek through meadows and forests. Experience natural hot water pools surrounded by snow-capped peaks. This challenging trek rewards you with one of the most beautiful camping spots in the Himalayas.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="trek-card w-[280px] md:w-[350px] [@media(min-width:2560px)]:w-[40rem]">
+                            <div class="trek-image [@media(min-width:2560px)]:h-[30rem] [@media(min-width:2560px)]:w-[40rem] ">
+                                <img src="images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-kasol-exploration-cafes-israeli-food-nightlife.jpg" alt="Kasol Exploration" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6 [@media(min-width:2560px)]:p-16">
+                                <h4 class="text-xl font-light text-primary mb-4 [@media(min-width:2560px)]:text-[3rem]">Kasol Exploration</h4>
+                                <p class="accommodation-subtitle [@media(min-width:2560px)]:text-[26px]">1hr journey</p>
+                                <p class="text-secondary leading-relaxed [@media(min-width:2560px)]:text-[28px]  [@media(min-width:2560px)]:leading-[3rem]">A 20 min short hike and 30 min drive away is the famous town of Kasol. Dive into its lively party scene, explore the eclectic cafes, and shop for unique handicrafts. Kasol is the perfect place to experience a mix of Israeli and local cultures.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="feature-card">
+                        <!-- <span class="feature-icon">ðŸ </span> -->
+						<img src="images/HostelActivities1.png" alt="Hostel Activities" class="icon-img h-[120px] w-[120px] [@media(min-width:2560px)]:h-[16rem] [@media(min-width:2560px)]:w-[16rem]">
+                        <h4 class="text-lg font-light text-primary mb-2 [@media(min-width:2560px)]:text-[3rem] [@media(min-width:2560px)]:mb-[3rem]">Hostel Activities</h4>
+                        <p class="feature-description [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem] [@media(min-width:2560px)]:mb-[3rem]">Inside the hostel, find your tribe. Our common areas are a haven for travelers to swap stories, play board games, or simply relax by a bonfire under a sky full of stars. We host jam sessions, movie nights, and community events to ensure a vibrant and welcoming atmosphere.</p>
+                    </div>
+                    <div class="feature-card">
+                        <!-- <span class="feature-icon">ðŸ§˜</span> -->
+						<img src="images/SpiritualImmersion1.png" alt="Spiritual and Cultural Immersion" class="icon-img h-[120px] w-[120px] [@media(min-width:2560px)]:h-[16rem] [@media(min-width:2560px)]:w-[16rem]">
+                        <h4 class="text-lg font-light text-primary mb-2 [@media(min-width:2560px)]:text-[3rem] [@media(min-width:2560px)]:mb-[3rem]">Spiritual and Cultural Immersion</h4>
+                        <p class="feature-description [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem] [@media(min-width:2560px)]:mb-[3rem]">Visit ancient temples in Manikaran, meditate by the gushing Parvati River, or simply find a quiet spot to practice yoga. The spiritual energy of the valley is palpable and offers a unique experience for those seeking inner peace.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-24 px-6 bg-secondary [@media(min-width:2560px)]:py-24 [@media(min-width:2560px)]:px-48">
+        <div class="max-w-79rem mx-auto [@media(min-width:2560px)]:max-w-[235rem]">
+            <div class="text-center mb-12">
+                <h1 class="section-title title-section">REVIEWS</h1>
+                <p class="text-lg text-secondary max-w-[600px] mx-auto leading-normal [@media(min-width:2560px)]:text-[2rem] [@media(min-width:2560px)]:max-w-[59rem]">What our guests are saying about their experience at Parvati's Lap</p>
+            </div>
+            
+            <div class="gallery-container">
+                <button class="gallery-nav gallery-prev [@media(min-width:2560px)]:w-[99px] [@media(min-width:2560px)]:h-[99px] [@media(min-width:2560px)]:text-[3rem]">â€¹</button>
+                <button class="gallery-nav gallery-next [@media(min-width:2560px)]:w-[99px] [@media(min-width:2560px)]:h-[99px] [@media(min-width:2560px)]:text-[3rem]">â€º</button>
+                
+                <div class="gallery-track">
+                    <div class="review-card w-[300px] md:w-[380px] [@media(min-width:2560px)]:w-[46rem]">
+                        <div class="review-stars [@media(min-width:2560px)]:text-[3rem]">â­â­â­â­â­</div>
+                        <p class="review-text [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem]">"From the moment I arrived, I was blown away. The trek up is worth every step for the view aloneâ€”it's absolutely mind-blowing. The hostel itself has an incredible vibe. The staff is super friendly and the other guests are all amazing people."</p>
+                        <p class="review-author  [@media(min-width:2560px)]:text-[21px]">- Rahul S., Verified Guest</p>
+                    </div>
+                    
+                    <div class="review-card w-[300px] md:w-[380px] [@media(min-width:2560px)]:w-[46rem]">
+                        <div class="review-stars [@media(min-width:2560px)]:text-[3rem]">â­â­â­â­â­</div>
+                        <p class="review-text [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem]">"As a solo female traveler, safety and a friendly environment are my top priorities. Parvati's Lap exceeded all my expectations. The dorms were clean and cozy, the food was delicious, and the hosts made me feel like family."</p>
+                        <p class="review-author [@media(min-width:2560px)]:text-[21px]">- Anya V., Solo Traveler</p>
+                    </div>
+                    
+                    <div class="review-card w-[300px] md:w-[380px] [@media(min-width:2560px)]:w-[46rem]">
+                        <div class="review-stars [@media(min-width:2560px)]:text-[3rem]">â­â­â­â­â­</div>
+                        <p class="review-text [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem]">"We booked for a few nights and ended up staying for over a week! The location is a secluded paradise, and the bonfire nights are something we'll never forget. It's not just a place to sleep; it's a community where you make lasting friendships."</p>
+                        <p class="review-author [@media(min-width:2560px)]:text-[21px]">- The Backpacker Duo, Verified Group</p>
+                    </div>
+                    
+                    <div class="review-card w-[300px] md:w-[380px] [@media(min-width:2560px)]:w-[46rem]">
+                        <div class="review-stars [@media(min-width:2560px)]:text-[3rem]">â­â­â­â­â­</div>
+                        <p class="review-text [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem]">"The food here is absolutely mind-blowing! Every meal felt like a warm hug after a long day of trekking. The cafe has the most incredible views and the staff goes above and beyond to make you feel at home."</p>
+                        <p class="review-author [@media(min-width:2560px)]:text-[21px]">- Maria K., Food Enthusiast</p>
+                    </div>
+                    
+                    <div class="review-card w-[300px] md:w-[380px] [@media(min-width:2560px)]:w-[46rem]">
+                        <div class="review-stars [@media(min-width:2560px)]:text-[3rem]">â­â­â­â­â­</div>
+                        <p class="review-text [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[3rem]">"Perfect honeymoon destination! The villa is absolutely stunning with breathtaking views. Complete privacy and luxury in the heart of the Himalayas. We couldn't have asked for a better romantic getaway."</p>
+                        <p class="review-author [@media(min-width:2560px)]:text-[21px]">- David & Sarah, Honeymooners</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Views Section -->
+    <section id="views" class="py-24 px-6 bg-primary [@media(min-width:2560px)]:py-24 [@media(min-width:2560px)]:px-48">
+        <div class="max-w-79rem mx-auto [@media(min-width:2560px)]:max-w-[235rem]">
+            <div class="text-center mb-12">
+                <h1 class="section-title title-section">VIEWS</h1>
+                <p class="text-lg text-secondary max-w-[600px] mx-auto leading-normal [@media(min-width:2560px)]:text-[2rem] [@media(min-width:2560px)]:max-w-[59rem]">Capture the breathtaking beauty of Parvati's Lap and the surrounding Himalayas</p>
+            </div>
+            
+            <div class="gallery-container">
+                <button class="gallery-nav gallery-prev [@media(min-width:2560px)]:w-[99px] [@media(min-width:2560px)]:h-[99px] [@media(min-width:2560px)]:text-[3rem]">â€¹</button>
+                <button class="gallery-nav gallery-next [@media(min-width:2560px)]:w-[99px] [@media(min-width:2560px)]:h-[99px] [@media(min-width:2560px)]:text-[3rem]">â€º</button>
+                
+                <div class="gallery-track">
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture40.jpg" alt="Mountain Vista" class="zoomable-image">
+
+                    </div>
+                    
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture45.jpg" alt="Himalayan Peaks" class="zoomable-image">
+
+                    </div>
+                    
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture38.jpg" alt="Parvati Valley" class="zoomable-image">
+
+                    </div>
+                    
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture49.jpg" alt="Forest Trails" class="zoomable-image">
+
+                    </div>
+                    
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture47.jpg" alt="Mountain Sunrise" class="zoomable-image">
+
+                    </div>
+                    
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture48.jpg" alt="Parvati River" class="zoomable-image">
+
+                    </div>
+
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture42.jpg" alt="Mountain Vista" class="zoomable-image">
+
+                    </div>
+                    
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture44.jpg" alt="Himalayan Peaks" class="zoomable-image">
+
+                    </div>
+                    
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture41.jpg" alt="Parvati Valley" class="zoomable-image">
+
+                    </div>
+                    
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture39.jpg" alt="Forest Trails" class="zoomable-image">
+
+                    </div>
+                    
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture38.jpg" alt="Mountain Sunrise" class="zoomable-image">
+
+                    </div>
+                    
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture36.jpg" alt="Parvati River" class="zoomable-image">
+
+                    </div>
+
+                    <div class="gallery-item w-[320px] h-[240px] md:w-[400px] md:h-[300px] [@media(min-width:2560px)]:h-[36rem] [@media(min-width:2560px)]:w-[46rem]">
+                        <img src="images/Views/Picture37.jpg" alt="Parvati River" class="zoomable-image">
+
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="https://instagram.com/parvatis_lap" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-olive-green text-white px-6 py-3 rounded-xl text-sm no-underline hover:bg-olive-dark hover:-translate-y-1 transition-all font-semibold [@media(min-width:2560px)]:text-[1.75rem] [@media(min-width:2560px)]:py-6">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        View on Instagram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6 bg-secondary [@media(min-width:2560px)]:py-24 [@media(min-width:2560px)]:px-48">
+        <div class="max-w-79rem mx-auto [@media(min-width:2560px)]:max-w-[235rem]">
+            <div class="text-center mb-12">
+                <h2 class="section-title title-section">CONTACT US</h2>
+                <p class="text-xl font-light text-secondary max-w-[700px] mx-auto leading-[1.7] tracking-[0.5px] italic [@media(min-width:2560px)]:text-[2rem] [@media(min-width:2560px)]:max-w-[59rem]">We're here to help you plan your perfect Himalayan retreat</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-light mb-6 text-primary [@media(min-width:2560px)]:text-[3rem]">GET IN TOUCH</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <strong class="text-primary text-lg [@media(min-width:2560px)]:text-[2rem]">Location</strong>
+                            <p class="text-muted mt-2 [@media(min-width:2560px)]:text-[1.75rem]">Lapas Village, Manikaran Rd,<br>Kasol, Himachal Pradesh-175105</p>
+                        </div>
+
+                        <div>
+                            <strong class="text-primary text-lg [@media(min-width:2560px)]:text-[2rem]">Phone</strong>
+                            <p class="text-muted mt-2 [@media(min-width:2560px)]:text-[1.75rem]">+91 908 222 9363</p>
+                        </div>
+                        
+                        <div>
+                            <strong class="text-primary text-lg [@media(min-width:2560px)]:text-[2rem]">Email</strong>
+                            <p class="text-muted mt-2 [@media(min-width:2560px)]:text-[1.75rem]">parvatislap@gmail.com</p>
+                        </div>
+                        
+                        <div>
+                            <strong class="text-primary text-lg [@media(min-width:2560px)]:text-[2rem]">How to Reach Us</strong>
+                            
+                            <!-- YouTube Link -->
+                            <div class="mt-3 mb-4">
+                                <a href="https://youtube.com/shorts/F8MC3NGpUw0?si=y-NsCzuN0uHCIWoZ" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-olive-green hover:text-olive-dark transition-colors">
+                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M23.498 6.186a2.974 2.974 0 0 0-2.094-2.106C19.691 3.5 12 3.5 12 3.5s-7.691 0-9.404.58A2.974 2.974 0 0 0 .502 6.186 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .502 5.814 2.974 2.974 0 0 0 2.094 2.106C4.309 20.5 12 20.5 12 20.5s7.691 0 9.404-.58a2.974 2.974 0 0 0 2.094-2.106A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.502-5.814zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>
+                                    </svg>
+                                    <span class="font-medium  [@media(min-width:2560px)]:text-[1.75rem]">Watch How to Reach Video</span>
+                                </a>
+                            </div>
+                            
+                            <p class="text-muted mt-2 mb-3 [@media(min-width:2560px)]:text-[1.75rem]">Kasol is the last bus stop for Volvo. From here there are 3 options to reach our property:</p>
+                            
+                            <div class="space-y-3 text-muted">
+                                <div>
+                                    <strong class="text-primary [@media(min-width:2560px)]:text-[2rem]">OPTION 1:</strong>
+                                    <p class="mt-1 [@media(min-width:2560px)]:text-[1.75rem]">You can book a 4x4 cab up to 6 guests directly from Kasol to Lapas village. From Lapas Village it's a 30-45 min climb to our property. (Tourist speed)</p>
+                                </div>
+                                
+                                <div>
+                                    <strong class="text-primary [@media(min-width:2560px)]:text-[2rem]">OPTION 2:</strong>
+                                    <p class="mt-1 [@media(min-width:2560px)]:text-[1.75rem]">Take a local bus till Balarga village which is about 25 mins. From here there is an off-road camper which can take up to 6 guests till Lapas Village in 15 mins and from Lapas Village it's a 30-45 min climb to our property. (Tourist speed)</p>
+                                </div>
+                                
+                                <div>
+                                    <strong class="text-primary [@media(min-width:2560px)]:text-[2rem]">OPTION 3:</strong>
+                                    <p class="mt-1 [@media(min-width:2560px)]:text-[1.75rem]">Take a local bus to Shangna village and then trek up to our property for 2 hrs.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <strong class="text-primary text-lg [@media(min-width:2560px)]:text-[2rem]">For Complaints</strong>
+                            <p class="text-muted mt-2 [@media(min-width:2560px)]:text-[1.75rem]">parvatislap@gmail.com</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-xl font-light mb-4 text-primary [@media(min-width:2560px)]:text-[2rem]">Follow Our Journey</h4>
+                            <div class="flex gap-6">
+                                <a href="https://instagram.com/parvatis_lap" target="_blank" rel="noopener noreferrer" class="text-olive-green hover:text-olive-dark transition-colors" aria-label="Follow us on Instagram">
+                                    <svg class="w-6 h-6 transition-transform duration-300 hover:scale-110 [@media(min-width:2560px)]:w-[60px] [@media(min-width:2560px)]:h-10" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.facebook.com/profile.php?id=61551650361876" target="_blank" rel="noopener noreferrer" class="text-olive-green hover:text-olive-dark transition-colors" aria-label="Follow us on Facebook">
+                                    <svg class="w-6 h-6 transition-transform duration-300 hover:scale-110 [@media(min-width:2560px)]:w-[60px] [@media(min-width:2560px)]:h-10" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M22.675 0h-21.35C.595 0 0 .594 0 1.326v21.348C0 23.406.595 24 1.325 24h11.49v-9.294H9.691v-3.622h3.125V8.413c0-3.1 1.893-4.788 4.658-4.788 1.325 0 2.464.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .594 23.406 0 22.675 0z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://youtube.com/shorts/F8MC3NGpUw0?si=y-NsCzuN0uHCIWoZ" target="_blank" rel="noopener noreferrer" class="text-olive-green hover:text-olive-dark transition-colors" aria-label="Watch our YouTube videos">
+                                    <svg class="w-6 h-6 transition-transform duration-300 hover:scale-110 [@media(min-width:2560px)]:w-[60px] [@media(min-width:2560px)]:h-10" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M23.498 6.186a2.974 2.974 0 0 0-2.094-2.106C19.691 3.5 12 3.5 12 3.5s-7.691 0-9.404.58A2.974 2.974 0 0 0 .502 6.186 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .502 5.814 2.974 2.974 0 0 0 2.094 2.106C4.309 20.5 12 20.5 12 20.5s7.691 0 9.404-.58a2.974 2.974 0 0 0 2.094-2.106A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.502-5.814zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-primary p-8 pt-[9.25rem] rounded-2xl border-2 border-theme [@media(min-width:2560px)]:pt-[10rem] [@media(min-width:2560px)]:px-26">
+                    <form id="contactForm" class="space-y-6 [@media(min-width:2560px)]:space-y-20">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="firstName" class="block text-sm text-muted mb-3 uppercase tracking-wide font-semibold  [@media(min-width:2560px)]:text-[1.75rem]">First name</label>
+                                <input id="firstName" type="text" class="w-full px-4 py-3 rounded-xl border-2 border-theme bg-white bg-opacity-90 text-sm text-text-dark focus:border-olive-green transition-colors  [@media(min-width:2560px)]:text-[1.75rem]">
+                            </div>
+                            <div>
+                                <label for="lastName" class="block text-sm text-muted mb-3 uppercase tracking-wide font-semibold [@media(min-width:2560px)]:text-[1.75rem]">Last name</label>
+                                <input id="lastName" type="text" class="w-full px-4 py-3 rounded-xl border-2 border-theme bg-white bg-opacity-90 text-sm text-text-dark focus:border-olive-green transition-colors [@media(min-width:2560px)]:text-[1.75rem]">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm text-muted mb-3 uppercase tracking-wide font-semibold [@media(min-width:2560px)]:text-[1.75rem]">Email</label>
+                            <input id="email" type="email" class="w-full px-4 py-3 rounded-xl border-2 border-theme bg-white bg-opacity-90 text-sm text-text-dark focus:border-olive-green transition-colors [@media(min-width:2560px)]:text-[1.75rem]">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm text-muted mb-3 uppercase tracking-wide font-semibold [@media(min-width:2560px)]:text-[1.75rem]">Message</label>
+                            <textarea id="message" class="w-full px-4 py-3 rounded-xl border-2 border-theme bg-white bg-opacity-90 text-sm text-text-dark min-h-32 resize-none focus:border-olive-green transition-colors [@media(min-width:2560px)]:text-[1.75rem]"></textarea>
+                        </div>
+                        
+                        <button id="whatsappBtn" type="button" class="bg-[#25D366] text-white flex items-center justify-center gap-3 px-7 py-3.5 rounded-xl border-0 cursor-pointer font-semibold transition-all duration-300 shadow-[0_4px_15px_rgba(37,211,102,0.3)] w-full hover:bg-[#1fae52] hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(37,211,102,0.4)] dark:bg-[#31da12] dark:shadow-[0_4px_15px_rgba(49,218,18,0.3)] dark:hover:bg-[#28b80f] dark:hover:shadow-[0_8px_25px_rgba(49,218,18,0.4)] [@media(min-width:2560px)]:text-[1.75rem]">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.106"/>
+                            </svg>
+                            <span class="font-medium [@media(min-width:2560px)]:text-[1.75rem]">Send Message</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 bg-text-dark text-white [@media(min-width:2560px)]:py-24 [@media(min-width:2560px)]:px-48">
+        <div class="max-w-79rem mx-auto [@media(min-width:2560px)]:max-w-[235rem]">
+            <div class="flex flex-wrap justify-between gap-8">
+                <div class="max-w-80">
+                    <h3 class="font-light tracking-widest mb-4 text-xl [@media(min-width:2560px)]:text-[2rem]">PARVATI'S LAP</h3>
+                    <p class="text-gray-300 leading-relaxed [@media(min-width:2560px)]:text-[1.5rem]">A sanctuary in the heart of the Himalayas, where adventure meets tranquility in perfect harmony.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-light mb-4 text-lg [@media(min-width:2560px)]:text-[2rem]">Quick links</h4>
+                    <ul class="list-none space-y-2">
+                        <li><a href="#accommodations" class="text-gray-300 no-underline hover:text-white transition-colors [@media(min-width:2560px)]:text-[1.5rem]">Hostel & Villa</a></li>
+                        <li><a href="#cafe-things" class="text-gray-300 no-underline hover:text-white transition-colors [@media(min-width:2560px)]:text-[1.5rem]">Cafe & Things to Do</a></li>
+                        <li><a href="#reviews" class="text-gray-300 no-underline hover:text-white transition-colors [@media(min-width:2560px)]:text-[1.5rem]">Reviews</a></li>
+                        <li><a href="#views" class="text-gray-300 no-underline hover:text-white transition-colors [@media(min-width:2560px)]:text-[1.5rem]">Views</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-light mb-4 text-lg [@media(min-width:2560px)]:text-[2rem]">Phone</h4>
+                    <p class="text-gray-300 [@media(min-width:2560px)]:text-[1.5rem]">+91 908 222 9363</p>
+                </div>
+                <div>
+                    <h4 class="font-light mb-4 text-lg [@media(min-width:2560px)]:text-[2rem]">Email</h4>
+                    <p class="text-gray-300 [@media(min-width:2560px)]:text-[1.5rem]">parvatislap@gmail.com</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 pt-8 border-t border-gray-700 text-gray-400 [@media(min-width:2560px)]:text-[2rem]">Â© 2024 Parvati's Lap</div>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div class="image-modal" id="imageModal" aria-hidden="true">
+        <button class="close-modal" id="closeImageModal" aria-label="Close image">Ã—</button>
+        <img class="modal-image" id="modalImage" src="" alt="">
+        <div id="carouselContainer" class="carousel-container">
+            <button class="carousel-nav carousel-nav-prev" id="carouselPrev" aria-label="Previous image">â€¹</button>
+            <div id="carouselTrack" class="carousel-track"></div>
+            <button class="carousel-nav carousel-nav-next" id="carouselNext" aria-label="Next image">â€º</button>
+        </div>
+    </div>
+
+</body>
+</html>

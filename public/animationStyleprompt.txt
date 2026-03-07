@@ -1,0 +1,95 @@
+1) TREKS Landing (Menu)
+Hero
+
+Title: “Treks of Parvati Valley”
+Subtext: “Legends, trails, and alpine stories—crafted for the curious.”
+Use Aceternity Hero with soft gradient/fog background + Motion opacity+translateY on load. Aceternity hero Motion basics
+
+Trek Grid
+
+6 cards (Kheerganga, Sar Pass, Grahan, Chalal, Rasol, Malana→Waichin).
+Use Card Spotlight / 3D Card patterns; background image via Reactive‑image tiltOnHover (very subtle), title + 1‑line tagline. Aceternity cards Reactive‑image tilt
+
+
+2) Trek Page Template (applies to all six treks)
+Header / Hero
+
+Full‑width hero image (Reactive‑image scrollReactive slight parallax; cap transforms to avoid motion sickness). Reactive‑image scrollReactive
+Title + mystic subtitle; Motion enters with soft fade (300–400ms). Motion
+
+Story Blocks (Aceternity Feature/Bento sections)
+
+Use 2–4 alternating blocks: image (left/right) + text (right/left).
+Each block reveals on scroll (Motion whileInView; once=true; threshold ~0.2). Aceternity feature/bento Motion scroll
+
+Image Gallery
+
+6–12 images per trek using bento grid. On hover → zoomOnHover; on click → clickExpand fullscreen modal. Aceternity bento Reactive‑image variants
+
+Info Strip / Stats
+
+Small pill cards: Starting Point, Distance, Duration, Difficulty, Best Season, Network, Guide. Staggered fade with Motion. Motion stagger
+
+Route / Itinerary (if applicable)
+
+Use a horizontal stepper/line or vertical timeline; animate between steps with layout transitions. Motion layout
+
+Homestays / Basecamp
+
+Showcase 2–4 stays with Card Spotlight; use tiltOnHover and tiny box‑shadow blur on hover. Aceternity card spotlight Reactive‑image tilt
+
+FAQs
+
+Accordion with subtle height spring; collapse/expand via Motion animate and layout. Motion animate/layout
+
+
+3) Per‑Trek Content Mapping & Micro‑motions
+Kheerganga (mythic, hot springs)
+
+Sections: The Legend (Kartikeya/Parvati), The Trail, Rudra Nag Homestays, FAQs.
+Use text‑first storytelling with soft fade‑ups, and zoomOnHover on spring/forest images. Motion Reactive‑image zoom
+
+Sar Pass (frozen lake, route steps)
+
+Sections: Call of the Frozen Lake, Grahan → Min Thach → Nagaru → Summit, Recovery at Base.
+Use layout transitions through each step; gallery uses clickExpand for the lake. Motion layout Reactive‑image clickExpand
+
+Grahan (secret village, culture)
+
+Sections: Trail & Split Tip, Legend & Customs, Homestays & Food.
+Use pan/ken‑burns on village stills; bento grid for homestays & cuisine. Reactive‑image pan/KenBurns Aceternity bento
+
+Chalal (riverside, day/night duality)
+
+Sections: Trance Trail, Day vs Night, Stays (Camps/Homestays/Cafés).
+Use gesture‑aware hover/drag micro‑motions on card group; carousel for riverside cafés. Motion gestures Aceternity carousel
+
+Rasol (steep climb, raw views)
+
+Sections: Stairway to Heaven, Culture & Rules, Above‑the‑Clouds Stays.
+Use scrollReactive parallax on valley‑drop shots; tall cards for stays. Reactive‑image scrollReactive Aceternity cards
+
+Malana → Waichin (forbidden → freedom)
+
+Sections: Malana Rules & Lore, Transition, Waichin Camping & Cafés.
+Use exit animation when “leaving” Malana section; KenBurnsSequence for Waichin night‑sky. Motion exit Reactive‑image KenBurns
+
+
+4) Accessibility, Performance, Content
+
+Respect prefers‑reduced‑motion; switch to non‑animated fallbacks for users who opt out. Motion best practices
+Lazy‑load images; use responsive sizes; compress and prefetch hero imagery. (Pair with Reactive‑image which is performance‑minded.) Reactive‑image perf notes
+All images require alt text; headings must be semantic (H1 per page); keyboard navigation supported in modals, carousels, and accordions.
+Keep color contrast compliant; maintain tranquil palette (green/stone/wood/river); typography: high‑legibility serif/sans pairing.
+
+
+5) Deliverables
+
+Pages/Routes: /treks (menu), /treks/kheerganga, /treks/sar-pass, /treks/grahan, /treks/chalal, /treks/rasol, /treks/malana-waichin.
+Components (suggested):
+
+TrekHero, TrekStats, TrekStoryBlock, TrekBentoGallery, TrekItinerary, HomestayCards, FaqAccordion.
+
+
+Content injection: Provide JSON for each trek with title, tagline, heroImage, stats, sections, gallery[].
+

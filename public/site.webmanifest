@@ -1,0 +1,25 @@
+{
+  "name": "Parvati's Lap - Himalayan Hostel & Villa",
+  "short_name": "Parvati's Lap",
+  "description": "Luxury Himalayan Hostel & Villa in Kasol, Parvati Valley",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#556b2f",
+  "background_color": "#fefffe",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/"
+}
+

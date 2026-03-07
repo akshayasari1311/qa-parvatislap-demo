@@ -7,7 +7,8 @@
  */
 
 interface StructuredDataProps {
-  data: unknown;
+  data?: unknown;
+  json?: string;
 }
 
 function removeUndefined(value: unknown): unknown {
@@ -30,11 +31,17 @@ function removeUndefined(value: unknown): unknown {
   return value;
 }
 
-export function StructuredData({ data }: StructuredDataProps) {
+export function serializeStructuredData(data: unknown): string {
+  return JSON.stringify(removeUndefined(data));
+}
+
+export function StructuredData({ data, json }: StructuredDataProps) {
+  const html = json ?? (data === undefined ? "{}" : serializeStructuredData(data));
+
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(removeUndefined(data)) }}
+      dangerouslySetInnerHTML={{ __html: html }}
     />
   );
 }

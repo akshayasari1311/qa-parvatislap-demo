@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../../styles/globals.css";
 import { ClientLayout } from "@/components/layout/ClientLayout";
-import { StructuredData } from "@/components/seo/StructuredData";
+import { StructuredData, serializeStructuredData } from "@/components/seo/StructuredData";
 import {
   generateHowToReachVideoSchema,
   generateMetadata,
@@ -33,6 +33,10 @@ const inter = Inter({
  * Using centralized SEO configuration with Open Graph, Twitter Cards, and structured data
  */
 export const metadata: Metadata = generateMetadata({});
+const organizationSchemaJson = serializeStructuredData(generateOrganizationSchema());
+const reviewSchemaJson = serializeStructuredData(generateReviewSchema());
+const howToReachVideoSchemaJson = serializeStructuredData(generateHowToReachVideoSchema());
+const contactPointSchemaJson = serializeStructuredData(generateContactPointSchema());
 
 /**
  * Root layout component (Server Component)
@@ -43,11 +47,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const organizationSchema = generateOrganizationSchema();
-  const reviewSchema = generateReviewSchema();
-  const howToReachVideoSchema = generateHowToReachVideoSchema();
-  const contactPointSchema = generateContactPointSchema();
-
   return (
     <html lang="en" className={`theme-light ${inter.variable}`}>
       <head>
@@ -76,16 +75,16 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://places.googleapis.com" />
 
         {/* Organization Structured Data */}
-        <StructuredData data={organizationSchema} />
+        <StructuredData json={organizationSchemaJson} />
         
         {/* Review Structured Data */}
-        <StructuredData data={reviewSchema} />
+        <StructuredData json={reviewSchemaJson} />
 
         {/* Contact Point Structured Data */}
-        <StructuredData data={contactPointSchema} />
+        <StructuredData json={contactPointSchemaJson} />
 
         {/* Video Structured Data (How to Reach) */}
-        <StructuredData data={howToReachVideoSchema} />
+        <StructuredData json={howToReachVideoSchemaJson} />
         
         {/* Google Analytics */}
         <GoogleAnalytics />

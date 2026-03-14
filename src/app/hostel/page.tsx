@@ -101,20 +101,26 @@ function parseContent2(text: string): Parsed {
     .map((l) => l.trim())
     .filter((l) => l.length > 0);
 
-  const h1Raw = lines[0] ?? "HOSTEL";
-  const h1 = h1Raw.split("–")[0]?.trim() || "HOSTEL";
-  const tagline = lines[1] ?? "";
-  const intro = lines[2] ?? "";
-
-  const rooms: Parsed["rooms"] = [];
-  let i = 3;
-
   const isRoomHeader = (l: string) =>
     l === "3 Beds Attic Room" ||
     l === "4 Beds Balcony Room" ||
     l === "4 Beds Hemp Room" ||
     l === "4 Beds Wood Room" ||
     l === "14 Beds Stone Room";
+
+  const h1Raw = lines[0] ?? "HOSTEL";
+  const h1 = ""; // h1Raw.split("–")[0]?.trim() || "HOSTEL";
+  const tagline = lines[0] ?? "";
+  
+  // Find the start of rooms
+  let introEnd = 1;
+  while (introEnd < lines.length && !isRoomHeader(lines[introEnd]!)) {
+    introEnd += 1;
+  }
+  const intro = lines.slice(1, introEnd).join(" ");
+
+  const rooms: Parsed["rooms"] = [];
+  let i = introEnd;
 
   while (i < lines.length) {
     const l = lines[i]!;

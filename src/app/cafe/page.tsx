@@ -41,14 +41,32 @@ export default function CafePage() {
               subtitle="Our Cafe: ADHIKARA - A Taste of the Himalayas"
               className="py-12 sm:py-14"
             >
-              <div className="max-w-4xl mx-auto mt-6">
+              {/* <div className="max-w-4xl mx-auto mt-6">
                 <p className="text-lg leading-[1.8] text-secondary text-center mb-4 [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
                   Perched high on the mountain above Lapas Village, our cafe offers more than just a meal - it&apos;s an experience for the soul. Surrounded by majestic glaciers and the serene Parvati Valley, our traditional restaurant and cafe is a warm and welcoming space where every bite is a tribute to the peaceful surroundings.
                 </p>
                 <p className="text-lg leading-[1.8] text-secondary text-center [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
                   Based on what our guests have said, our food is a highlight of their stay. We&apos;re known for serving delicious and wholesome meals that perfectly complement a day of trekking and exploration. Whether you&apos;re craving authentic Indian cuisine or a hot cup of tea to warm you up after a trek, we are dedicated to providing a dining experience that feels like home.
                 </p>
-              </div>
+              </div> */}
+
+                          <div className="max-w-4xl [@media(min-width:2560px)]:max-w-[112rem] mx-auto mb-12">
+                  <p className="text-lg leading-[1.8] text-secondary text-center mb-6 [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
+                    Perched high in the mountains above Lapas Village in Parvati Valley, ADHIKARA Cafe offers more than just food – it offers an experience surrounded by the beauty of the Himalayas. Overlooking the serene landscapes of Parvati Valley and the snow-covered Himalayan peaks, our café is a peaceful place where travelers can relax, enjoy warm meals, and take in breathtaking mountain views.
+                  </p>
+                  <p className="text-lg leading-[1.8] text-secondary text-center mb-6 [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
+                    Located close to Kasol and several popular trekking routes like Kheerganga, Grahan, and Rasol, our café is a favorite stop for trekkers, backpackers, and travelers exploring Parvati Valley. After a long hike through the forests and mountain trails, guests often gather here to enjoy a hot cup of tea, fresh meals, and the calming atmosphere of the mountains.
+                  </p>
+                  <p className="text-lg leading-[1.8] text-secondary text-center mb-6 [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
+                    Our menu offers a mix of wholesome Indian dishes and comforting meals that are perfect after a day of trekking or sightseeing. Guests often enjoy traditional Himalayan flavors along with simple, delicious food prepared with care and fresh ingredients.
+                  </p>
+                  <p className="text-lg leading-[1.8] text-secondary text-center mb-6 [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
+                    Many travelers say that the café becomes one of the most memorable parts of their stay. With its warm hospitality, scenic views, and relaxing atmosphere, ADHIKARA Cafe creates a welcoming space where people from around the world can connect, share stories, and enjoy the peaceful charm of Parvati Valley.
+                  </p>
+                  <p className="text-lg leading-[1.8] text-secondary text-center [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
+                    Whether you're starting your day with breakfast overlooking the mountains or relaxing with evening tea after exploring nearby villages and trekking trails, our café offers a cozy Himalayan dining experience that feels like home.
+                  </p>
+                </div>
             </HeroCard>
           </div>
         </section>

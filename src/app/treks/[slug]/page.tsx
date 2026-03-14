@@ -27,117 +27,84 @@ const TREKS: TrekDef[] = [
   { slug: "rasol", title: "Rasol Trek", key: /^Rasol trek/im },
   { slug: "malana-waichin", title: "Malana -> Waichin", key: /^Malana trek/im },
   { slug: "pin-parvati-pass", title: "Pin Parvati Pass Trek" },
-  { slug: "jiwa-nala", title: "Jiwa Nala Trek" },
-  { slug: "bhandak-thach", title: "Bhandak Thach Trek" },
-  { slug: "swajani-biskeri", title: "Swajani-Biskeri Trek" },
-  { slug: "sargi", title: "Sargi Trek" },
-  { slug: "shikoi", title: "Shikoi Hikes" },
-  { slug: "kasol-exploration", title: "Kasol Exploration" },
+  { slug: "jiwa-nala", title: "Jiwa Nala Trek", key: /^Jiwa Nala Trek/im },
+  { slug: "bhandak-thach", title: "Bhandak Thach Trek", key: /^Bhandak Thach Trek/im },
+  { slug: "swajani-biskeri", title: "Swajani-Biskeri Trek", key: /^Swajani-Biskeri Trek/im },
+  { slug: "sargi", title: "Sargi Trek", key: /^Sargi Trek/im },
+  { slug: "shikoi", title: "Shikoi Hikes", key: /^Shikoi Hikes/im },
+  { slug: "kasol-exploration", title: "Kasol Exploration", key: /^Kasol Exploration/im },
 ];
 
 const STATIC_TREKS: Record<string, { subtitle: string; body: string[]; image?: string }> = {
   "pin-parvati-pass": {
-    subtitle: "10-12 days | ~110 km | A classic trans-Himalayan expedition from Parvati Valley (Kullu) to Pin Valley (Spiti).",
+    subtitle: "Deep in the heart of the Indian Himalayas lies one of the most challenging and rewarding trekking routes in Himachal Pradesh — the Pin Parvati Pass Trek. This legendary trail connects the lush green Parvati Valley with the cold desert landscapes of Spiti Valley, creating one of the most dramatic trekking experiences in the Himalayas.",
     image: "/images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-pin-parvati-pass-trek-spiti-high-altitude-glacier-camping.jpg",
     body: [
-      "Not every trek is a hike. Some are full mountain crossings. Pin Parvati Pass is one of them.",
-      "The Trek: Parvati Valley to Spiti Crossover",
-      "Starting Point: Barshaini side (Kasol base) and exit toward Mudh in Pin Valley",
-      "Difficulty: Difficult to Technical (high-altitude expedition)",
-      "Duration: 10-12 days",
-      "Approx Distance: Around 100-110 km",
-      "Highest Point: Pin Parvati Pass (~5,319 m)",
-      "This route starts in the green valleys of Kullu and ends in the stark, high-altitude terrain of Spiti. You move across glaciers, moraines, river crossings, and long exposed sections where weather can shift quickly.",
-      "Who Should Do It",
-      "Experienced trekkers with solid fitness, prior altitude exposure, and proper acclimatization planning.",
-      "Before You Commit",
-      "Use Kasol and Parvati Valley as your prep base, then move only with a suitable weather window and local support team.",
-    ],
+        "Beyond Kasol: The Legendary Pin Parvati Pass Trek (One of the Toughest Himalayan Adventures)",
+        "Deep in the heart of the Indian Himalayas lies one of the most challenging and rewarding trekking routes in Himachal Pradesh — the Pin Parvati Pass Trek. This legendary trail connects the lush green Parvati Valley with the cold desert landscapes of Spiti Valley, creating one of the most dramatic trekking experiences in the Himalayas.",
+        "Starting from the beautiful town of Barshaini near Kasol, the Pin Parvati Pass Trek takes adventurers through dense forests, alpine meadows, glacial rivers, and massive mountain passes before finally reaching the remote Pin Valley in Spiti.",
+        "Unlike shorter treks like Kheerganga or Chalal, the Pin Parvati Pass Trek is a true expedition that tests endurance and determination while offering breathtaking views of untouched Himalayan wilderness.",
+        "The Trail: From Parvati Valley to the Spiti Desert",
+        "Starting Point: Barshaini (near Kasol)",
+        "Difficulty: Difficult",
+        "Duration: 9–11 Days",
+        "The Pin Parvati Pass Trek begins from Barshaini village in Parvati Valley, the same starting point for the Kheerganga Trek. The trail initially follows the Parvati River as it winds through dense forests and green mountain landscapes.",
+        "Trekkers gradually move deeper into the valley, passing through beautiful campsites such as Kheerganga, Tunda Bhuj, and Thakur Kuan. Each campsite offers incredible views of glaciers, waterfalls, and towering Himalayan peaks.",
+        "As the trek progresses, the terrain becomes more rugged and challenging. Trekkers must cross icy rivers, walk across glacier fields, and climb steep mountain slopes before finally reaching the high altitude Pin Parvati Pass at around 5,300 meters above sea level.",
+        "The Highlight: Crossing the Pin Parvati Pass",
+        "The most thrilling moment of the journey is crossing the Pin Parvati Pass itself. Standing at over 5,300 meters, the pass offers breathtaking views of snow-covered Himalayan mountains stretching across both Parvati Valley and Spiti Valley.",
+        "The landscape changes dramatically on the other side of the pass. The lush green forests of Parvati Valley slowly transform into the barren, high-altitude desert terrain of Spiti.",
+        "This dramatic transition between two completely different Himalayan landscapes makes the Pin Parvati Pass Trek one of the most unique trekking experiences in India.",
+        "Camping on the Pin Parvati Pass Trek",
+        "Unlike village treks in Parvati Valley, the Pin Parvati Pass Trek is a full camping expedition that requires proper trekking equipment and experienced guides.",
+        "If you are planning the Pin Parvati Pass Trek, here is what the experience usually includes.",
+        "1. The Experience",
+        "Trekkers spend several nights camping at remote locations such as Kheerganga, Tunda Bhuj, Odi Thach, and Mantalai Lake. Each campsite offers stunning views of glaciers, mountain rivers, and untouched Himalayan landscapes.",
+        "The trek offers a rare opportunity to explore some of the most remote regions of the Indian Himalayas.",
+        "2. The Food",
+        "Meals during the expedition are usually prepared by the trekking team. Trekkers are served warm, energy-rich meals including rice, dal, vegetables, soups, and tea to maintain energy during the long trekking days.",
+        "3. Guided Expeditions",
+        "Because of the high altitude and challenging terrain, most trekkers complete the Pin Parvati Pass Trek through organized trekking groups with experienced mountain guides and support teams.",
+        "Typical trekking packages range from ₹25,000 to ₹40,000 depending on the services and expedition duration.",
+        "Digital Detox: Deep in the Himalayan Wilderness",
+        "Once the trek moves beyond Barshaini and deeper into the Parvati Valley, mobile networks completely disappear. The journey becomes a true wilderness adventure where trekkers are surrounded only by mountains, glaciers, and rivers.",
+        "Without modern distractions, the trek becomes a powerful experience of nature, silence, and exploration in the high Himalayas.",
+        "Quick Guide for the Traveler",
+        "Best Time to Visit",
+        "July to September – The most suitable season when the pass is accessible and weather conditions are relatively stable.",
+        "What to Carry",
+        "High-quality trekking shoes, thermal clothing, gloves, sunglasses, sunscreen, trekking poles, and a good backpack are essential for this high-altitude expedition.",
+        "Respect the Mountains",
+        "Always follow the instructions of trekking guides, avoid littering in the fragile mountain environment, and respect the natural ecosystem of the Himalayas.",
+        "Why Pin Parvati Pass Is One of the Greatest Himalayan Treks",
+        "Among all treks in Himachal Pradesh, the Pin Parvati Pass Trek is considered one of the most legendary adventures. The journey connects the green forests of Parvati Valley with the cold desert of Spiti Valley through glaciers, rivers, and high mountain passes.",
+        "For experienced trekkers seeking a true Himalayan expedition, the Pin Parvati Pass Trek offers one of the most unforgettable journeys in the entire Indian Himalayas."
+    ]
   },
   "jiwa-nala": {
     subtitle: "3-4 hrs | ~6 km | A low-crowd forest trail near Grahan with clear mountain stream sections.",
     image: "/images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-jiwa-nala-trek-grahan-pine-forest-stream-camping.jpg",
-    body: [
-      "If Kasol feels crowded, Jiwa Nala feels like the quiet mountain version of the same valley.",
-      "The Trek: Forest Trail to Crystal Stream Sections",
-      "Starting Point: Kasol-Grahan side trailheads",
-      "Difficulty: Easy to Moderate",
-      "Duration: 3-4 hours",
-      "Approx Distance: Around 6 km",
-      "Jiwa Nala is a half-day nature trek through pine forests and stream-side paths. It is perfect for slow walking, birding, and photography without committing to a full-day climb.",
-      "Best For",
-      "Couples, beginners, and trekkers taking a recovery day between longer routes.",
-      "Local Tip",
-      "Start early, carry water and a light layer, and check local trail updates before heading out.",
-    ],
+    body: [],
   },
   "bhandak-thach": {
     subtitle: "2 days | ~15 km | A Pulga-side meadow trek to broad alpine camps in upper Parvati Valley.",
     image: "/images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-bhandak-thach-trek-swajani-meadows-camping.jpg",
-    body: [
-      "Bhandak Thach is where the valley opens up and the mountain skyline suddenly takes over.",
-      "The Trek: Pulga Forests to High Meadow Camps",
-      "Starting Point: Pulga village (via Kasol-Barshaini side access)",
-      "Difficulty: Moderate",
-      "Duration: 2 days",
-      "Approx Distance: Around 15 km",
-      "This route climbs through forest belts and opens into wide thach meadows that are ideal for camping and stargazing.",
-      "Why Trekkers Love It",
-      "Lower crowd levels than mainstream routes, big horizon views, and strong sunrise-sunset camp moments.",
-      "Planning Note",
-      "Route conditions vary by season. Confirm weather, camping spots, and guide support before departure.",
-    ],
+    body: [],
   },
   "swajani-biskeri": {
     subtitle: "2-3 days | ~18 km | An offbeat Pulga-side meadow circuit to Biskeri with wide ridge panoramas.",
     image: "/images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-swajani-biskeri-trek-pulga-offbeat-alpine-camping.jpg",
-    body: [
-      "Swajani-Biskeri is for trekkers who want the views of famous routes without the traffic of famous routes.",
-      "The Trek: Offbeat Meadow Circuit to Biskeri Thach",
-      "Starting Point: Pulga side approach",
-      "Difficulty: Moderate",
-      "Duration: 2-3 days",
-      "Approx Distance: Around 18 km",
-      "This trail moves across meadow systems above Parvati Valley and reaches Biskeri sectors known for open 360-degree mountain views.",
-      "The Vibe",
-      "Quiet campsites, long ridgeline sunsets, and a strong offbeat feel compared to crowded valley trails.",
-      "Safety First",
-      "Wayfinding can be unclear in changing weather, so local guide support is recommended.",
-    ],
+    body: [],
   },
   sargi: {
     subtitle: "3 hrs | ~5 km | A moderate Kasol-side climb with glacier-facing and valley-wide viewpoints.",
     image: "/images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-sargi-trek-glacier-viewpoint-forest-trail.jpg",
-    body: [
-      "Short trek, serious payoff. Sargi gives big valley views without needing a multi-day plan.",
-      "The Trek: Local Climb to Glacier-Facing Viewpoints",
-      "Starting Point: Kasol-Lapas side trails",
-      "Difficulty: Moderate",
-      "Duration: Around 3 hours",
-      "Approx Distance: Around 5 km",
-      "The route combines forest sections, stream crossings, and open viewpoint points overlooking Parvati Valley ridges.",
-      "Best Use Case",
-      "A strong half-day conditioning trek before longer routes like Sar Pass or Pin Parvati logistics.",
-      "Practical Tip",
-      "Carry water, light weather protection, and enough daylight buffer for descent.",
-    ],
+    body: [],
   },
   shikoi: {
     subtitle: "30-60 mins | Easy | Local hikes through village trails, farms, and Parvati Valley culture.",
     image: "/images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-shikoi-hike-village-trail-terraced-farms-family-trek.jpg",
-    body: [
-      "Not every mountain day needs to be a grind. Shikoi hikes are built for slow travel and local connection.",
-      "The Trek: Easy Village and Farm-Side Walks",
-      "Starting Point: Local village paths near Kasol side stays",
-      "Difficulty: Easy",
-      "Duration: 30-60 mins",
-      "Approx Distance: Short local loops",
-      "These walks pass terraced farms, small forest paths, and village lanes, offering a culture-first mountain experience.",
-      "Best For",
-      "Families, beginners, and trekkers using the day for recovery or acclimatization.",
-      "Timing Tip",
-      "Go in daylight for better views and easier route decisions.",
-    ],
+    body: [],
   },
   "malana-waichin": {
     subtitle: "1.5-2 hrs | Moderate to Steep | A culture-and-meadow route from Malana side to Waichin Valley.",
@@ -161,18 +128,7 @@ const STATIC_TREKS: Record<string, { subtitle: string; body: string[]; image?: s
   "kasol-exploration": {
     subtitle: "1 hr journey | A low-effort Kasol outing for cafes, markets, riverside walks, and local culture.",
     image: "/images/Trek/parvatis-lap-hostel-villa-himalayas-kasol-kasol-exploration-cafes-israeli-food-nightlife.jpg",
-    body: [
-      "Kasol exploration is your zero-pressure mountain day between high-effort trek blocks.",
-      "The Route: Cafe Hops, Riverside Walks, and Market Streets",
-      "Starting Point: Kasol main market",
-      "Difficulty: Easy",
-      "Duration: 1 hour to half-day",
-      "This plan covers Parvati riverside stretches, local cafes, market lanes, and nearby transfer points for upcoming treks.",
-      "Why It Matters",
-      "Kasol works as a practical logistics base for Parvati Valley routes and a recovery stop before or after major climbs.",
-      "Smart Window",
-      "Visit early morning or late afternoon to avoid peak traffic and market rush.",
-    ],
+    body: [],
   },
 };
 
@@ -223,11 +179,16 @@ function normalizeText(input: string) {
   return input
     .replace(/â€™|â€˜/g, "'")
     .replace(/â€œ|â€/g, '"')
-    .replace(/â€“|â€”/g, "-")
+    .replace(/â€“|â€”|â€"/g, "-")
     .replace(/â€¦/g, "...")
-    .replace(/Â°/g, " degrees")
-    .replace(/Â/g, "")
-    .replace(/\u00A0/g, " ")
+    .replace(/â‚¹/g, "Rs ")
+    .replace(/Ã¢â‚¬â„¢|Ã¢â‚¬Ëœ/g, "'")
+    .replace(/Ã¢â‚¬Å“|Ã¢â‚¬Â/g, '"')
+    .replace(/Ã¢â‚¬â€œ|Ã¢â‚¬â€/g, "-")
+    .replace(/Ã¢â‚¬Â¦/g, "...")
+    .replace(/Ã‚Â°/g, " degrees")
+    .replace(/Ã‚/g, "")
+    .replace(/ /g, " ")
     .trim();
 }
 
@@ -245,16 +206,23 @@ function pickImage(block: string): string | undefined {
 }
 
 function pickSubtitle(block: string) {
+  const stripTags = (value: string) =>
+    value
+      .replace(/^<(header|sub-header|mini-header|list|p)>/i, "")
+      .replace(/<\/(header|sub-header|mini-header|list|p)>$/i, "")
+      .replace(/:contentReference\[[^\]]+\]\{[^}]+\}/g, "")
+      .trim();
+
   const lines = block
     .split(/\r?\n/g)
     .map((l) => l.trim())
     .filter(Boolean);
 
   const star = lines.find((l) => l.startsWith("*"));
-  if (star) return normalizeText(star.replace(/^\*\s*/, "").trim());
+  if (star) return normalizeText(stripTags(star.replace(/^\*\s*/, "").trim()));
 
   const candidate = lines.find((l) => l.length > 12 && !/^map it with image/i.test(l) && !/^\w+\s*Trek/i.test(l));
-  return normalizeText(candidate ?? "Legends, trails, and alpine stories-crafted for the curious.");
+  return normalizeText(stripTags(candidate ?? "Legends, trails, and alpine stories-crafted for the curious."));
 }
 
 function extractBody(block: string) {
@@ -273,7 +241,7 @@ function extractBody(block: string) {
     cleaned.push(l);
   }
 
-  const blocks: Array<{ type: "h2" | "p" | "li"; text: string }> = [];
+  const blocks: Array<{ type: "h1" | "h2" | "h3" | "p" | "li" | "spacer"; text: string }> = [];
   const paras = cleaned
     .join("\n")
     .split(/\n{2,}/g)
@@ -283,6 +251,24 @@ function extractBody(block: string) {
   for (const p of paras) {
     const lines = p.split(/\r?\n/g).map((x) => x.trim()).filter(Boolean);
     for (const ln of lines) {
+      const tagged = ln.match(/^<(header|sub-header|mini-header|list|p)>([\s\S]*?)<\/\1>$/i);
+      if (tagged) {
+        const [, tag, rawText] = tagged;
+        const text = normalizeText(rawText.replace(/:contentReference\[[^\]]+\]\{[^}]+\}/g, "").trim());
+        if (!text) continue;
+        if (tag === "header") {
+          blocks.push({ type: "h1", text });
+        } else if (tag === "sub-header") {
+          blocks.push({ type: "h2", text });
+        } else if (tag === "mini-header") {
+          blocks.push({ type: "h3", text });
+        } else if (tag === "list") {
+          blocks.push({ type: "li", text });
+        } else {
+          blocks.push({ type: "p", text });
+        }
+        continue;
+      }
       if (ln.startsWith("*")) {
         blocks.push({ type: "li", text: normalizeText(ln.replace(/^\*\s*/, "").trim()) });
       } else if (ln.endsWith(":") && ln.length < 80) {
@@ -293,15 +279,15 @@ function extractBody(block: string) {
         blocks.push({ type: "p", text: normalizeText(ln) });
       }
     }
-    blocks.push({ type: "p", text: "" });
+    blocks.push({ type: "spacer", text: "" });
   }
 
   const out: typeof blocks = [];
   for (const b of blocks) {
-    if (b.type === "p" && b.text === "") {
+    if (b.type === "spacer") {
       if (out.length === 0) continue;
       const prev = out[out.length - 1]!;
-      if (prev.type === "p" && prev.text === "") continue;
+      if (prev.type === "spacer") continue;
     }
     out.push(b);
   }
@@ -358,7 +344,7 @@ export default async function TrekDetailPage({ params }: { params: unknown }) {
   const block = loadBlock(def);
   const staticTrek = STATIC_TREKS[def.slug];
   if (!block && !staticTrek) notFound();
-  const preferStatic = def.slug === "malana-waichin";
+  const preferStatic = false;
   const useStatic = Boolean(staticTrek && (preferStatic || !block));
 
   const subtitle = useStatic ? staticTrek!.subtitle : pickSubtitle(block!);
@@ -421,7 +407,7 @@ export default async function TrekDetailPage({ params }: { params: unknown }) {
 
                 <div className="p-10 sm:p-12 flex flex-col justify-center">
                   <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-[var(--text-primary)]">{def.title}</h1>
-                  <p className="mt-4 text-[var(--text-secondary)] leading-[1.9] max-w-[65ch]">{subtitle}</p>
+                  <p className="mt-4 text-xl sm:text-2xl font-light text-[var(--text-secondary)] leading-[1.7] max-w-[65ch]">{subtitle}</p>
                 </div>
               </div>
             </FadeIn>
@@ -430,11 +416,25 @@ export default async function TrekDetailPage({ params }: { params: unknown }) {
               <FadeIn>
                 <div className="bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-[24px] p-8 sm:p-10 shadow-[0_10px_26px_rgba(0,0,0,0.06)] dark:shadow-[0_10px_26px_rgba(0,0,0,0.28)]">
                   {body.map((b, i) => {
+                    if (b.type === "h1") {
+                      return (
+                        <h2 key={i} className="mt-10 first:mt-0 text-2xl font-light text-[var(--text-primary)] tracking-wide">
+                          {b.text}
+                        </h2>
+                      );
+                    }
                     if (b.type === "h2") {
                       return (
                         <h2 key={i} className="mt-10 first:mt-0 text-2xl font-light text-[var(--text-primary)] tracking-wide">
                           {b.text}
                         </h2>
+                      );
+                    }
+                    if (b.type === "h3") {
+                      return (
+                        <p key={i} className="m-0 text-[var(--text-secondary)] leading-[1.95]">
+                          {b.text}
+                        </p>
                       );
                     }
                     if (b.type === "li") {
@@ -445,11 +445,19 @@ export default async function TrekDetailPage({ params }: { params: unknown }) {
                         </div>
                       );
                     }
-                    if (b.type === "p" && b.text === "") {
+                    if (b.type === "spacer") {
                       return <div key={i} className="h-3" />;
                     }
 
                     if (b.type === "p" && looksLikeHeading(b.text)) {
+                      return (
+                        <h2 key={i} className="mt-10 first:mt-0 text-2xl font-light text-[var(--text-primary)] tracking-wide">
+                          {b.text}
+                        </h2>
+                      );
+                    }
+
+                    if (b.type === "p" && i === 0) {
                       return (
                         <h2 key={i} className="mt-10 first:mt-0 text-2xl font-light text-[var(--text-primary)] tracking-wide">
                           {b.text}
@@ -488,3 +496,5 @@ export default async function TrekDetailPage({ params }: { params: unknown }) {
     </>
   );
 }
+
+

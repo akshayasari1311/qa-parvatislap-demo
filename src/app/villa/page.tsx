@@ -7,7 +7,7 @@ import { ROUTES } from "@/lib/routes";
 export const metadata: Metadata = generateMetadata({
   title: "Meghbari Luxury Villa in Kasol (Parvati Valley)",
   description:
-    "Stay at Meghbari Luxury Villa by Parvati's Lap in Lapas Village near Kasol — a private Himalayan villa with glacier views, premium comfort, and a calm base for Parvati Valley treks.",
+    "Stay at Meghbari Luxury Villa by Parvati's Lap in Lapas Village near Kasol - a private Himalayan villa with glacier views, premium comfort, and a calm base for Parvati Valley treks.",
   keywords: [
     "kasol villa",
     "luxury villa kasol",
@@ -35,4 +35,5 @@ export default function VillaPage() {
     </>
   );
 }
+
 

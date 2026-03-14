@@ -18,6 +18,14 @@ export type HostelContent = {
   whyText: string;
 };
 
+const roomSubtitles: Record<string, string[]> = {
+  "4 Beds Wood Room": ["Attached Washroom"],
+  "3 Beds Attic Room": ["Inter connected with 4 Beds Balcony Room", "Attached Washroom"],
+  "4 Beds Balcony Room": ["Interconnected with 3 Beds Attic Room", "Attached Washroom"],
+  "4 Beds Hemp Room": ["Outside Washroom"],
+  "14 Beds Stone Room": ["Outside Washroom"],
+};
+
 export default function Hostel({ content }: { content: HostelContent }) {
   return (
     <section className="bg-secondary py-24 px-10 sm:px-14 md:px-20 lg:px-29 [@media(min-width:1280px)]:px-24 xl:px-40 2xl:px-60 [@media(min-width:1536px)]:px-32 [@media(min-width:2560px)]:py-24 [@media(min-width:2560px)]:px-64">
@@ -49,6 +57,18 @@ export default function Hostel({ content }: { content: HostelContent }) {
                   <h2 className="text-3xl font-light text-[var(--text-primary)] tracking-[0.10em] uppercase [@media(min-width:2560px)]:text-[2.75rem]">
                     {room.name}
                   </h2>
+                  {roomSubtitles[room.name] && (
+                    <div className="mt-3 space-y-1">
+                      {roomSubtitles[room.name].map((line) => (
+                        <p
+                          key={line}
+                          className="text-[13px] font-normal tracking-[0.14em] uppercase text-[var(--muted)] [@media(min-width:2560px)]:text-[1.15rem]"
+                        >
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </FadeIn>
 
@@ -62,9 +82,13 @@ export default function Hostel({ content }: { content: HostelContent }) {
             <h3 className="text-2xl font-light text-[var(--text-primary)] tracking-[0.08em] uppercase text-center">
               {content.whyTitle}
             </h3>
-            <p className="mt-5 text-[var(--text-secondary)] leading-[1.9] text-center">
-              {content.whyText}
-            </p>
+            <div className="mt-5 space-y-5 text-center">
+              {content.whyText.split("\n\n").map((paragraph, index) => (
+                <p key={index} className="text-[var(--text-secondary)] leading-[1.9]">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
         </FadeIn>
       </div>

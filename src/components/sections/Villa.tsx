@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { AnimatedTestimonials, type AnimatedTestimonial } from "@/components/ui/animated-testimonials";
 import { HeroCard } from "@/components/ui/hero-card";
@@ -13,9 +13,9 @@ export default function Villa() {
   const testimonials: AnimatedTestimonial[] = [
     {
       quote:
-        "Exclusive private villa with 180-degree glacier views and complete seclusion â€” a peaceful Himalayan hideaway for couples and honeymoon stays.",
+        "Exclusive private villa with 180-degree glacier views and complete seclusion - a peaceful Himalayan hideaway for couples and honeymoon stays.",
       name: "Glacier View Suite",
-      designation: "Meghbari Luxury Villa â€¢ Parvati Valley, Himachal Pradesh",
+      designation: "Meghbari Luxury Villa - Parvati Valley, Himachal Pradesh",
       src: "/images/MeghbariVilla/parvatis-lap-hostel-villa-himalayas-kasol-tosh-mountain-offbeat-villa-luxury-wooden-homestay-kheerganga-camps-view-villa-1.jpg",
       alt:
         "Parvati's Lap Hostel and Villa parvati valley, kasol, Himalayas - Meghbari Luxury Villa exterior with glacier views, Himachal Pradesh.",
@@ -24,14 +24,14 @@ export default function Villa() {
       quote:
         "Wake up to sunrise over snow-capped peaks, spend the day exploring Parvati Valley, and return to private comfort with premium amenities.",
       name: "Sunrise & Serenity",
-      designation: "Lapas Village (near Kasol) â€¢ Himalayan mountain stay",
+      designation: "Lapas Village (near Kasol) - Himalayan mountain stay",
       src: "/images/MeghbariVilla/parvatis-lap-hostel-villa-himalayas-kasol-tosh-mountain-offbeat-villa-luxury-wooden-homestay-kheerganga-camps-view-villa-2.jpg",
       alt:
         "Parvati's Lap Hostel and Villa parvati valley, kasol, Himalayas - Sunrise light on snow-capped peaks from the villa, Himachal Pradesh.",
     },
     {
       quote:
-        "Designed for true quiet: panoramic valley air, warm interiors, and a stay that feels far from the crowds â€” yet close to Kasol and treks.",
+        "Designed for true quiet: panoramic valley air, warm interiors, and a stay that feels far from the crowds - yet close to Kasol and treks.",
       name: "Seclusion with Access",
       designation: "Base for Kheerganga, Sar Pass, and Parvati Valley trails",
       src: "/images/MeghbariVilla/parvatis-lap-hostel-villa-himalayas-kasol-tosh-mountain-offbeat-villa-luxury-wooden-homestay-kheerganga-camps-view-villa-3.jpg",
@@ -40,9 +40,9 @@ export default function Villa() {
     },
     {
       quote:
-        "A luxury villa stay that still feels authentic to Himachal â€” mountain textures, clean comfort, and the calm energy of Parvati Valley.",
+        "A luxury villa stay that still feels authentic to Himachal - mountain textures, clean comfort, and the calm energy of Parvati Valley.",
       name: "Authentic Luxury",
-      designation: "Kasol, Parvati Valley â€¢ Himachali mountain architecture vibe",
+      designation: "Kasol, Parvati Valley - Himachali mountain architecture vibe",
       src: "/images/MeghbariVilla/parvatis-lap-hostel-villa-himalayas-kasol-tosh-mountain-offbeat-villa-luxury-wooden-homestay-kheerganga-camps-view-villa-4.jpg",
       alt:
         "Parvati's Lap Hostel and Villa parvati valley, kasol, Himalayas - Luxury villa interiors with Himalayan design, Himachal Pradesh.",
@@ -51,7 +51,7 @@ export default function Villa() {
       quote:
         "Perfect for photography and stargazing: wide open skies, glacier silhouettes, and unforgettable nights in the Himalayas.",
       name: "Stars & Stillness",
-      designation: "Stargazing â€¢ Photography â€¢ Mountain nights",
+      designation: "Stargazing - Photography - Mountain nights",
       src: "/images/MeghbariVilla/parvatis-lap-hostel-villa-himalayas-kasol-tosh-mountain-offbeat-villa-luxury-wooden-homestay-kheerganga-camps-view-villa-5.jpg",
       alt:
         "Parvati's Lap Hostel and Villa parvati valley, kasol, Himalayas - Night ambience and mountain sky near Meghbari Villa, Himachal Pradesh.",
@@ -66,7 +66,7 @@ export default function Villa() {
           <div className="text-center mb-12">
             <h1 className="section-title title-section">Meghbari Luxury Villa</h1>
             <p className="text-lg text-secondary max-w-[760px] mx-auto leading-normal [@media(min-width:2560px)]:text-[2rem] [@media(min-width:2560px)]:max-w-[70rem]">
-              Meghbari Luxury Villa at Parvati&apos;s Lap â€” a private Himalayan stay in Lapas Village near Kasol, with glacier and valley views,
+              Meghbari Luxury Villa at Parvati&apos;s Lap - a private Himalayan stay in Lapas Village near Kasol, with glacier and valley views,
               calm seclusion, and easy access to Parvati Valley treks.
             </p>
           </div>
@@ -75,9 +75,23 @@ export default function Villa() {
         <div className="mb-14">
           <HeroCard
             title="MEGHBARI LUXURY VILLA"
-            subtitle="Private Himalayan villa stay near Kasol"
-            description="Glacier and valley views, calm seclusion, and easy access to Parvati Valley treksâ€”crafted for couples and slow mountain mornings."
-          />
+            subtitle="Private Himalayan luxury villa stay near Kasol in the scenic Parvati Valley."
+          >
+            <div className="mt-5 space-y-5 max-w-[980px] mx-auto">
+              <p className="text-[var(--text-secondary)] leading-[1.9]">
+                Meghbari Luxury Villa offers an exclusive mountain retreat surrounded by the breathtaking landscapes of Parvati Valley, Himachal Pradesh. Designed for travelers seeking privacy, comfort, and natural beauty, this private villa provides panoramic glacier and valley views, peaceful forest surroundings, and a truly immersive Himalayan experience.
+              </p>
+              <p className="text-[var(--text-secondary)] leading-[1.9]">
+                Located close to Kasol, Tosh, and some of the most famous Parvati Valley treks, Meghbari is perfect for couples, honeymoon travelers, and slow explorers who want to enjoy the mountains at their own pace. Guests can wake up to golden Himalayan sunrises, fresh alpine air, and uninterrupted views of snow-capped peaks while enjoying the comfort of a carefully crafted mountain villa.
+              </p>
+              <p className="text-[var(--text-secondary)] leading-[1.9]">
+                The villa blends traditional Himachali architecture with modern luxury, creating a cozy yet elegant space ideal for relaxing after exploring nearby trails such as the Kheerganga Trek, Grahan Village Trek, Rasol Trek, and Sar Pass Trek.
+              </p>
+              <p className="text-[var(--text-secondary)] leading-[1.9]">
+                If you're searching for a luxury villa near Kasol with glacier views, peaceful surroundings, and easy access to Parvati Valley adventures, Meghbari Luxury Villa offers the perfect escape into the Himalayas.
+              </p>
+            </div>
+          </HeroCard>
         </div>
 
         <div className="max-w-6xl [@media(min-width:2560px)]:max-w-[140rem] mx-auto">
@@ -92,13 +106,13 @@ export default function Villa() {
             <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-secondary)] border-2 border-[var(--border-color)] rounded-[20px] p-8 shadow-[0_10px_30px_rgba(128,128,0,0.1)] dark:shadow-[0_10px_30px_rgba(57,255,20,0.08)]">
               <h3 className="font-light text-[var(--text-primary)] mb-3 tracking-wider">Glacier & valley views</h3>
               <p className="text-[var(--text-secondary)] leading-[1.7]">
-                180-degree glacier and Parvati Valley panoramas â€” sunrise, golden hour, and crisp mountain air, right from your private stay.
+                180-degree glacier and Parvati Valley panoramas - sunrise, golden hour, and crisp mountain air, right from your private stay.
               </p>
             </div>
             <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-secondary)] border-2 border-[var(--border-color)] rounded-[20px] p-8 shadow-[0_10px_30px_rgba(128,128,0,0.1)] dark:shadow-[0_10px_30px_rgba(57,255,20,0.08)]">
               <h3 className="font-light text-[var(--text-primary)] mb-3 tracking-wider">Romantic, quiet, premium</h3>
               <p className="text-[var(--text-secondary)] leading-[1.7]">
-                A secluded villa experience crafted for couples and honeymoon travelersâ€”privacy, comfort, and peaceful Himalayan nights.
+                A secluded villa experience crafted for couples and honeymoon travelers - privacy, comfort, and peaceful Himalayan nights.
               </p>
             </div>
             <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-secondary)] border-2 border-[var(--border-color)] rounded-[20px] p-8 shadow-[0_10px_30px_rgba(128,128,0,0.1)] dark:shadow-[0_10px_30px_rgba(57,255,20,0.08)]">
@@ -110,7 +124,7 @@ export default function Villa() {
             <div className="bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-secondary)] border-2 border-[var(--border-color)] rounded-[20px] p-8 shadow-[0_10px_30px_rgba(128,128,0,0.1)] dark:shadow-[0_10px_30px_rgba(57,255,20,0.08)]">
               <h3 className="font-light text-[var(--text-primary)] mb-3 tracking-wider">Cafe on-site</h3>
               <p className="text-[var(--text-secondary)] leading-[1.7]">
-                Enjoy hearty meals at ADHIKARA Cafe â€” perfect after a hike, with warm hospitality and Himalayan views.
+                Enjoy hearty meals at ADHIKARA Cafe - perfect after a hike, with warm hospitality and Himalayan views.
               </p>
             </div>
           </div>
@@ -119,5 +133,6 @@ export default function Villa() {
     </section>
   );
 }
+
 
 

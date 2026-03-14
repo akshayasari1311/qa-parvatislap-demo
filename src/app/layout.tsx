@@ -70,7 +70,7 @@ export default function RootLayout({
         {/* Preload hero video for faster LCP */}
         <link 
           rel="preload" 
-          href="/media/_parvatislap_hero.mp4" 
+          href="/media/_parvatislap_hero_optimized.mp4" 
           as="video" 
           type="video/mp4"
         />

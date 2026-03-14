@@ -29,7 +29,10 @@ function pickTagline(block: string, fallback: string) {
 
   // Common pattern: a "headline" line right after the trek name
   const candidate = lines.find((l) => l.length > 12 && !/^map it with image/i.test(l) && !/^\w+\s*Trek/i.test(l));
-  return normalizeText(candidate ?? fallback);
+  if (candidate) {
+    return normalizeText(candidate.replace(/<[^>]+>/g, ""));
+  }
+  return normalizeText(fallback);
 }
 
 function pickImage(block: string): string | undefined {

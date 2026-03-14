@@ -15,6 +15,43 @@ type Parsed = {
   whyText: string;
 };
 
+const hostelRoomImageOrder: Record<string, string[]> = {
+  "4 Beds Wood Room": [
+    "WoodRoom1.jpg",
+    "WoodRoom2.jpg",
+    "WoodRoom5.jpg",
+    "WoodRoom3.jpg",
+    "WoodRoom4.jpg",
+  ],
+  "3 Beds Attic Room": [
+    "3BedsBalconyRoom1.jpg",
+    "3BedsBalconyRoom4.jpg",
+    "3BedsBalconyRoom3.jpg",
+    "3BedsBalconyRoom2.jpg",
+  ],
+  "4 Beds Hemp Room": [
+    "HempRoom4.jpg",
+    "HempRoom3.jpg",
+    "HempRoom2.jpg",
+    "HempRoom1.jpg",
+  ],
+  "14 Beds Stone Room": [
+    "StoneRoom5.jpg",
+    "StoneRoom3.jpg",
+    "StoneRoom4.jpg",
+    "StoneRoom2.jpg",
+    "StoneRoom1.jpg",
+  ],
+};
+
+const hostelRoomDisplayOrder = [
+  "4 Beds Wood Room",
+  "3 Beds Attic Room",
+  "4 Beds Balcony Room",
+  "4 Beds Hemp Room",
+  "14 Beds Stone Room",
+];
+
 function mapFilenameToSrc(file: string) {
   const f = file.trim();
 
@@ -73,7 +110,7 @@ function parseContent2(text: string): Parsed {
   let i = 3;
 
   const isRoomHeader = (l: string) =>
-    l === "3 Beds Balcony Room" ||
+    l === "3 Beds Attic Room" ||
     l === "4 Beds Balcony Room" ||
     l === "4 Beds Hemp Room" ||
     l === "4 Beds Wood Room" ||
@@ -115,18 +152,39 @@ function parseContent2(text: string): Parsed {
 }
 
 function toHostelContent(parsed: Parsed): HostelContent {
-  const rooms: HostelRoom[] = parsed.rooms.map((r) => ({
-    name: r.name,
-    items: r.lines.map((ln) => {
-      const src = mapFilenameToSrc(ln.file);
-      return {
-        title: ln.file,
-        description: ln.description,
-        src,
-        alt: `Parvati's Lap Hostel and Villa parvati valley, kasol, Himalayas - ${ln.description}`,
-      };
-    }),
-  }));
+  const orderedRooms = [...parsed.rooms].sort((a, b) => {
+    const ai = hostelRoomDisplayOrder.indexOf(a.name);
+    const bi = hostelRoomDisplayOrder.indexOf(b.name);
+    const aRank = ai === -1 ? Number.MAX_SAFE_INTEGER : ai;
+    const bRank = bi === -1 ? Number.MAX_SAFE_INTEGER : bi;
+    return aRank - bRank;
+  });
+
+  const rooms: HostelRoom[] = orderedRooms.map((r) => {
+    const desiredOrder = hostelRoomImageOrder[r.name];
+    const sortedLines = desiredOrder
+      ? [...r.lines].sort((a, b) => {
+          const ai = desiredOrder.indexOf(a.file);
+          const bi = desiredOrder.indexOf(b.file);
+          const aRank = ai === -1 ? Number.MAX_SAFE_INTEGER : ai;
+          const bRank = bi === -1 ? Number.MAX_SAFE_INTEGER : bi;
+          return aRank - bRank;
+        })
+      : r.lines;
+
+    return {
+      name: r.name,
+      items: sortedLines.map((ln) => {
+        const src = mapFilenameToSrc(ln.file);
+        return {
+          title: ln.file,
+          description: ln.description,
+          src,
+          alt: `Parvati's Lap Hostel and Villa parvati valley, kasol, Himalayas - ${ln.description}`,
+        };
+      }),
+    };
+  });
 
   return {
     h1: parsed.h1 || "HOSTEL",

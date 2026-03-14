@@ -1,4 +1,5 @@
-﻿@import "tailwindcss";
+@import "tailwindcss" source(none);
+@source "../src";
 
 /* ======================================
    TAILWIND V4 DARK MODE CONFIGURATION
@@ -815,4 +816,6 @@ html {
                 padding-right: 12rem;
             }
         }
+
+
 

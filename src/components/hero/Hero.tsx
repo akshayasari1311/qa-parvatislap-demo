@@ -14,7 +14,7 @@ export default function Hero() {
       {/* Video Background */}
       <video className="hero-video" autoPlay muted loop playsInline>
         <source
-          src="/media/_parvatislap_hero.mp4"
+          src="/media/_parvatislap_hero_optimized.mp4"
           type="video/mp4"
         />
         Your browser does not support the video tag.

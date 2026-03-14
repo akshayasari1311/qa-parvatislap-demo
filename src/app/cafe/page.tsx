@@ -6,9 +6,9 @@ import { HeroCard } from "@/components/ui/hero-card";
 import { ROUTES } from "@/lib/routes";
 
 export const metadata: Metadata = generateMetadata({
-  title: "ADHIKARA Cafe â€” Best Cafe in Kasol (Parvati Valley)",
+  title: "ADHIKARA Cafe - Best Cafe in Kasol (Parvati Valley)",
   description:
-    "ADHIKARA Cafe at Parvatiâ€™s Lap in Lapas Village (near Kasol) is a mountain-view cafe serving wholesome Himachali & Indian food, chai/coffee, and comfort meals â€” perfect after treks in Parvati Valley.",
+    "ADHIKARA Cafe at Parvati's Lap in Lapas Village (near Kasol) is a mountain-view cafe serving wholesome Himachali and Indian food, chai/coffee, and comfort meals - perfect after treks in Parvati Valley.",
   keywords: [
     "best cafe in kasol",
     "kasol cafe",
@@ -39,10 +39,11 @@ export default function CafePage() {
             <HeroCard
               title="CAFE"
               subtitle="Our Cafe: ADHIKARA - A Taste of the Himalayas"
+              className="py-12 sm:py-14"
             >
-              <div className="max-w-4xl mx-auto mt-10">
-                <p className="text-lg leading-[1.8] text-secondary text-center mb-6 [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
-                  Perched high on the mountain above Lapas Village, our cafe offers more than just a mealâ€”it&apos;s an experience for the soul. Surrounded by majestic glaciers and the serene Parvati Valley, our traditional restaurant and cafe is a warm and welcoming space where every bite is a tribute to the peaceful surroundings.
+              <div className="max-w-4xl mx-auto mt-6">
+                <p className="text-lg leading-[1.8] text-secondary text-center mb-4 [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
+                  Perched high on the mountain above Lapas Village, our cafe offers more than just a meal - it&apos;s an experience for the soul. Surrounded by majestic glaciers and the serene Parvati Valley, our traditional restaurant and cafe is a warm and welcoming space where every bite is a tribute to the peaceful surroundings.
                 </p>
                 <p className="text-lg leading-[1.8] text-secondary text-center [@media(min-width:2560px)]:text-[28px] [@media(min-width:2560px)]:leading-[4rem]">
                   Based on what our guests have said, our food is a highlight of their stay. We&apos;re known for serving delicious and wholesome meals that perfectly complement a day of trekking and exploration. Whether you&apos;re craving authentic Indian cuisine or a hot cup of tea to warm you up after a trek, we are dedicated to providing a dining experience that feels like home.

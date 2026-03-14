@@ -48,9 +48,23 @@ export default function TreksLanding({ cards }: { cards: TrekCard[] }) {
               <p className="mt-4 text-lg text-secondary max-w-[720px] mx-auto leading-normal [@media(min-width:2560px)]:text-[2rem]">
                 Treks of Parvati Valley
               </p>
-              <p className="mt-3 text-[var(--text-secondary)] leading-[1.9] max-w-[820px] mx-auto">
-                Legends, trails, and alpine stories—crafted for the curious.
-              </p>
+              <div className="mt-5 max-w-[920px] mx-auto space-y-4">
+                <p className="text-[var(--text-secondary)] leading-[1.9]">
+                  Parvati Valley in Himachal Pradesh is one of the most iconic trekking destinations in the Indian Himalayas, attracting backpackers, hikers, and adventure travelers from around the world. Starting from the lively village of Kasol, the valley opens into a network of scenic forest trails, remote Himalayan villages, alpine meadows, and high-altitude mountain passes that define the trekking culture of the region.
+                </p>
+                <p className="text-[var(--text-secondary)] leading-[1.9]">
+                  Among the most popular trails is the Kheerganga Trek, famous for its forest paths, hot springs, and breathtaking views of the Parvati mountains. Other beautiful village treks such as the Grahan Trek, Rasol Trek, Chalal Trek, Jiwa Nala Trek, and Sargi Trek take travelers through dense pine forests, wooden Himachali settlements, and peaceful mountain landscapes.
+                </p>
+                <p className="text-[var(--text-secondary)] leading-[1.9]">
+                  Trekkers can also explore charming Himalayan villages including Tosh, Kutla, Pulga, and Kalga, each offering unique views of the valley, traditional culture, and serene nature trails.
+                </p>
+                <p className="text-[var(--text-secondary)] leading-[1.9]">
+                  For experienced adventurers, Parvati Valley also offers challenging high-altitude expeditions like the Sar Pass Trek, Bhandak Thach Trek, and the Swajani-Bhandak-Biskeri Trek, routes that cross glacier valleys, alpine ridges, and untouched Himalayan terrain.
+                </p>
+                <p className="text-[var(--text-secondary)] leading-[1.9]">
+                  Together, these trails make Parvati Valley near Kasol one of the best trekking regions in Himachal Pradesh, offering unforgettable journeys through the wild beauty of the Himalayas.
+                </p>
+              </div>
             </div>
           </div>
         </FadeIn>
@@ -98,4 +112,6 @@ export default function TreksLanding({ cards }: { cards: TrekCard[] }) {
     </section>
   );
 }
+
+
 

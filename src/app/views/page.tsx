@@ -34,7 +34,7 @@ export default function ViewsPage() {
               title="VIEWS"
               subtitle="Himalayan panoramas above Parvati Valley"
              // description="Capture the breathtaking beauty of Parvati’s Lap and the surrounding Himalayas — mountain light, valley air, and calm moments above Lapas Village near Kasol."
-            description="At Parvati’s Lap, the views are one of the most unforgettable parts of the experience. Located high above Lapas Village near Kasol in the beautiful Parvati Valley, the property offers breathtaking panoramas of the surrounding Himalayan mountains, forests, and valleys.
+            description="At Parvati's Lap, the views are one of the most unforgettable parts of the experience. Located high above Lapas Village near Kasol in the beautiful Parvati Valley, the property offers breathtaking panoramas of the surrounding Himalayan mountains, forests, and valleys.
 
 From sunrise to sunset, guests can enjoy changing mountain landscapes filled with soft golden light, drifting clouds, and fresh valley air. Early mornings reveal peaceful Himalayan horizons while evenings bring colorful sunsets over the snow-covered peaks.
 

@@ -111,19 +111,31 @@ export default function Contact() {
                 </div>
 
                 <p className="text-muted mt-2 mb-3 [@media(min-width:2560px)]:text-[1.75rem]">
-                  Kasol is the last bus stop for Volvo. From here there are 3
+                  Kasol is the last bus stop for Volvo. From here there are 4
                   options to reach our property:
                 </p>
 
-                <div className="space-y-3 text-muted">
+                <div className="space-y-5 text-muted">
                   <div>
                     <strong className="text-primary [@media(min-width:2560px)]:text-[2rem]">
                       OPTION 1:
                     </strong>
                     <p className="mt-1 [@media(min-width:2560px)]:text-[1.75rem]">
-                      You can book a 4x4 cab up to 6 guests directly from Kasol
-                      to Lapas village. From Lapas Village it&apos;s a 30-45 min
-                      climb to our property. (Tourist speed)
+                      You can book a 4x4 cab for up to 6 guests directly from
+                      Kasol to Lapas village. From Lapas Village it&apos;s a 30-45
+                      min climb to our property. (Tourist speed) Just follow the
+                      yellow and orange arrows.
+                    </p>
+                    <p className="mt-2 [@media(min-width:2560px)]:text-[1.75rem]">
+                      <strong className="text-primary">Pick Up Point:</strong>{" "}
+                      <a
+                        href="https://maps.app.goo.gl/19mYSSZx4ssF2Hk56"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#808000] hover:text-[#556b2f] transition-colors dark:text-[#39ff14] dark:hover:text-[#2ecc11] break-all"
+                      >
+                        https://maps.app.goo.gl/19mYSSZx4ssF2Hk56
+                      </a>
                     </p>
                   </div>
 
@@ -132,11 +144,23 @@ export default function Contact() {
                       OPTION 2:
                     </strong>
                     <p className="mt-1 [@media(min-width:2560px)]:text-[1.75rem]">
-                      Take a local bus till Balarga village which is about 25
-                      mins. From here there is an off-road camper which can take
-                      up to 6 guests till Lapas Village in 15 mins and from
-                      Lapas Village it&apos;s a 30-45 min climb to our property.
-                      (Tourist speed)
+                      Take a local bus till Manikaran village - Shivalik hotel -
+                      which is about 20 mins. From here there is an off-road
+                      camper which can take up to 6 guests till Lapas Village in
+                      25 mins and from Lapas Village it&apos;s a 30-45 min climb
+                      to our property. (Tourist speed) Just follow the yellow
+                      and orange arrows.
+                    </p>
+                    <p className="mt-2 [@media(min-width:2560px)]:text-[1.75rem]">
+                      <strong className="text-primary">Pick Up Point:</strong>{" "}
+                      <a
+                        href="https://maps.app.goo.gl/wBTSouaEMQh7eFRM9"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#808000] hover:text-[#556b2f] transition-colors dark:text-[#39ff14] dark:hover:text-[#2ecc11] break-all"
+                      >
+                        https://maps.app.goo.gl/wBTSouaEMQh7eFRM9
+                      </a>
                     </p>
                   </div>
 
@@ -145,8 +169,47 @@ export default function Contact() {
                       OPTION 3:
                     </strong>
                     <p className="mt-1 [@media(min-width:2560px)]:text-[1.75rem]">
-                      Take a local bus to Shangna village and then trek up to
-                      our property for 2 hrs.
+                      A 2 hr trek route from Ruskat Village.
+                    </p>
+                    <p className="mt-2 [@media(min-width:2560px)]:text-[1.75rem]">
+                      <strong className="text-primary">Trek Start Point:</strong>{" "}
+                      <a
+                        href="https://maps.app.goo.gl/NigvuDRBtxHtpSfv8"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#808000] hover:text-[#556b2f] transition-colors dark:text-[#39ff14] dark:hover:text-[#2ecc11] break-all"
+                      >
+                        https://maps.app.goo.gl/NigvuDRBtxHtpSfv8
+                      </a>
+                    </p>
+                    <p className="mt-2 [@media(min-width:2560px)]:text-[1.75rem]">
+                      You can have your cab or bus driver drop you at this
+                      point. There is a shop opposite the temple at the start of
+                      Ruskat village. Follow the yellow arrows to reach
+                      Parvati&apos;s Lap Hostel. You can ask locals for directions
+                      to Lapas village for the trek.
+                    </p>
+                  </div>
+
+                  <div>
+                    <strong className="text-primary [@media(min-width:2560px)]:text-[2rem]">
+                      OPTION 4:
+                    </strong>
+                    <p className="mt-1 [@media(min-width:2560px)]:text-[1.75rem]">
+                      Take a local bus to Shangna village Fruit wine shop. The
+                      trek to Lapas starts from here which takes about 2 1/2
+                      hrs. Follow the steps to Lapas village and then follow
+                      yellow arrows to Parvati&apos;s Lap.
+                    </p>
+                    <p className="mt-2 [@media(min-width:2560px)]:text-[1.75rem]">
+                      <a
+                        href="https://maps.app.goo.gl/W5Snyy7TbpPdgb6N6"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#808000] hover:text-[#556b2f] transition-colors dark:text-[#39ff14] dark:hover:text-[#2ecc11] break-all"
+                      >
+                        https://maps.app.goo.gl/W5Snyy7TbpPdgb6N6
+                      </a>
                     </p>
                   </div>
                 </div>
